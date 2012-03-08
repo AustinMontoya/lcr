@@ -25,12 +25,12 @@ We highly recommend that you already are familiar with using a terminal or comma
 
 1. Make sure you have the above software installed and running. The default configuration for each is fine.
 1. Create a virtualenv for the project and activate it:
-1.1 On Linux, OS X:
+- On Linux, OS X:
 ```bash
 virtualenv ~/lcr
 . ~/lcr/bin/activate
 ```
-1.2 On Windows (from Command Prompt):
+- On Windows (from Command Prompt):
 ```bash
 virtualenv \Users\<your_username>\lcr
 \Users\<your_username>\lcr\Scripts\activate.bat
@@ -45,7 +45,7 @@ Windows git users may wish to perform this step in a separate Git Bash window in
 cd /path/to/cloned/repo
 pip install -r requirements.txt
 ```
-1. Start the server
+1. Start the server:
 ```bash
 python runserver.py
 ```
