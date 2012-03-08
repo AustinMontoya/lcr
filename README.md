@@ -37,20 +37,24 @@ We highly recommend that you already are familiar with using a terminal or comma
     virtualenv \Users\<your_username>\lcr
     \Users\<your_username>\lcr\Scripts\activate.bat
     ```
-1. Clone the repo (alternatively, you can download a tarball or zipped copy)
-```bash
-git clone https://github.com/armontoya/lcr.git
-```
+1. Clone the repo (alternatively, you can download a tarball or zipped copy):
+
+    ```bash
+    git clone https://github.com/armontoya/lcr.git
+    ```
 Windows git users may wish to perform this step in a separate Git Bash window instead of the command prompt.
 1. Change directories into the repository you just cloned and install the dependencies:
-```bash
-cd /path/to/cloned/repo
-pip install -r requirements.txt
-```
+
+    ```bash
+    cd /path/to/cloned/repo
+    pip install -r requirements.txt
+    ```
 1. Start the server:
-```bash
-python runserver.py
-```
+
+    ```bash
+    python runserver.py
+    ```
+    
 You're done! That wasn't so hard, was it?
 
 
