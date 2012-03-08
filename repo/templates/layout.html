@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+	<head>
+		{% block head %}
+		<link rel='stylesheet' href="{{ url_for('static', filename='css/style.css') }}" />
+		<title>{% block title %}{% endblock %} | Learning Content Repository</title>
+		{% endblock %}
+	</head>
+	<body>
+		<nav>
+			<a href="/">Home</a>
+			<a href={{ url_for('create') }}>Create</a>
+		</nav>
+		<div id='content'>
+			{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>
