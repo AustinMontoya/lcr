@@ -25,16 +25,18 @@ We highly recommend that you already are familiar with using a terminal or comma
 
 1. Make sure you have the above software installed and running. The default configuration for each is fine.
 1. Create a virtualenv for the project and activate it:
-- On Linux, OS X:
-```bash
-virtualenv ~/lcr
-. ~/lcr/bin/activate
-```
-- On Windows (from Command Prompt):
-```bash
-virtualenv \Users\<your_username>\lcr
-\Users\<your_username>\lcr\Scripts\activate.bat
-```
+    - On Linux, OS X:
+    
+    ```bash
+    virtualenv ~/lcr
+    . ~/lcr/bin/activate
+    ```
+    - On Windows (from Command Prompt):
+    
+    ```cmd
+    virtualenv \Users\<your_username>\lcr
+    \Users\<your_username>\lcr\Scripts\activate.bat
+    ```
 1. Clone the repo (alternatively, you can download a tarball or zipped copy)
 ```bash
 git clone https://github.com/armontoya/lcr.git
