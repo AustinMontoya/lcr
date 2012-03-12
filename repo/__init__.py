@@ -12,6 +12,9 @@ else:
 app = Flask(__name__)
 
 app.config["MONGOALCHEMY_DATABASE"] = config["APP_DB_NAME"]
-db = MongoAlchemy(app)
+try:
+	db = MongoAlchemy(app)
+except:
+	print "Unable to connect to MongoDB. Make sure your connection settings are correct and that the server is running"
 
 import repo.views
