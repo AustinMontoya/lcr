@@ -17,4 +17,4 @@ try:
 except:
 	print "Unable to connect to MongoDB. Make sure your connection settings are correct and that the server is running"
 
-import repo.views
+import repo.routes
