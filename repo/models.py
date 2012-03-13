@@ -22,4 +22,4 @@ class LearningObject(db.Document):
 	title = db.StringField(min_length=3, max_length=50, required=True)
 	description = db.StringField(max_length=140, required=False)
 	tags = db.ListField(db.StringField(), required=False)
-	files = db.ListField(db.DocumentField(Resource), min_capacity=1)
+	resources = db.ListField(db.DocumentField(Resource), min_capacity=1)

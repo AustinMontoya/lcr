@@ -1,30 +1,47 @@
+import json
+
+result = {}
+
 def create(request, id):
 	if request is None:
-		return "{ Error: 'request data was not found' }" 
+		result['success'] = False
+		result['error'] = "request data was not found"
+	else:
+		result['success'] = True
 
-	if id is None:
-		return "{ Error: 'content id was not found' }" 
+	# handle multi and inline parameters in request
 
-	# handle multi parameter in request
+	result['id'] = "id of the newly created resource"
 
-	return "{ id: 'id of the newly created resource' }"
+	return json.dumps(result)
 
-def retreive(request, id):
+def retrieve(request, id):
 	if request is None:
-		return "{ Error: 'request data was not found' }" 
+		result['success'] = False
+		result['error'] = "request data was not found"
+	else:
+		result['success'] = True
 
-	# handle metadata parameter in request
+	# handle metadata parameter
 
-	return "{ name: 'value', name2, 'value2' }"
+	result['document'] = json.dumps({'filename':'value','description':'value2'})
+
+	return json.dumps(result)
 
 def update(request, id):
 	if request is None:
-		return "{ Error: 'request data was not found' }" 
+		result['success'] = False
+		result['error'] = "request data was not found"
+	else:
+		result['success'] = True
 
-	return "{ success: 'revision of the object?' }"
+	return json.dumps(result)
 
 def delete(request, id):
 	if request is None:
-		return "{ Error: 'request data was not found' }" 
+		result['success'] = False
+		result['error'] = "request data was not found"
+	else:
+		result['success'] = True
 
-	return "{ success: 'transaction id?' }"
+	return json.dumps(result)
