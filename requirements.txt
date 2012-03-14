@@ -1,9 +1,7 @@
 Flask==0.8
 Flask-MongoAlchemy==0.5.3
-Flask-WTF==0.5.4
 Jinja2==2.6
 MongoAlchemy==0.11
-WTForms==1.0.1
 Werkzeug==0.8.3
 pymongo==2.1.1
 wsgiref==0.1.2
