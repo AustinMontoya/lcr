@@ -1,23 +1,33 @@
 import json
 import util
-from flask import make_response
 import creation
+
 
 result = {}
 
 def create(request):
-	result['success'] = False
-	status_code = 200
+	success = True
+	error = ''
 
 	if request is None:
-		result['error'] = "request data was not found"
-		status_code = 400
+		success = False
+		error = "request data was not found"
 
 	# handle multi and inline parameters in request
 	multi = util.str2bool(request.args.get('multi'))
+
+	if multi is True:
+		if request.headers['content-type'] != 'application/json':
+			print "request content-type was not application/json"
+
+		if type(request.json) is not list:
+			# check to see if it is a single document (i.e., dict)
+			pass
+
 	inline = util.str2bool(request.args.get('inline'))
+
 	try:
-		result['id'] = creation.create_content(request.json)
+		result['id'] = creation.create_content(request.json)					
 		result['success'] = True
 	except Exception as e:
 		result['success'] = False
@@ -39,6 +49,12 @@ def create(request):
 	#	print 'key: ' + item + ', value: ' + request.form[item]
 	#print request.files[1]
 	#creation.create_content()
+
+	if success is True:
+		result['success'] = True
+	else:
+		result['success'] = False
+		result['error'] = error
 
 	return json.dumps(result)
 

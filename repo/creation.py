@@ -6,14 +6,35 @@ result = {}
 def create_content(metadata):
 	# create a new content object in mongo
 	# return an id
-	
-	#print metadata
-	#new_object = LearningObject(title='test', description='test description', tags=['tag1', 'tag2'])
-	#new_object.save()
 
-	raise Exception("new exception")
+	id = ''
 
-	return str(new_object.mongo_id)
+	if type(metadata) is dict:
+
+		incoming_title = ''
+		incoming_description = ''
+		incoming_tags = ''
+
+		try:
+			incoming_title = metadata['title']
+			incoming_description = metadata['description']
+			incoming_tags = metadata['tags']
+		except:
+			raise Exception("metadata invalid")
+
+		try:
+			new_object = LearningObject(title=incoming_title, 
+										description=incoming_description, 
+										tags=incoming_tags)
+			new_object.save()
+			
+			id = str(new_object.mongo_id)
+		except:
+			raise Exception("error saving object to database")
+	else:
+		raise Exception("invalid JSON")
+
+	return id
 
 def create_resource_link(url):
 	# create a new content object in mongo

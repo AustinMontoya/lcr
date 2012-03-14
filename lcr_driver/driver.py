@@ -3,13 +3,14 @@ import urllib2
 import json
 
 url = "http://localhost:5000/api/create/content/?multi=true"
-values = [	{ "title": "Birds of Prey",
+#values = [{ "title": "Birds of Prey",
+#    		"description": "Lesson on all kinds of birds",
+#    		"tags": ["eagle", "falcon"] }, { "title": "Birds of Prey",
+#    		"description": "Lesson on all kinds of birds",
+#    		"tags": ["eagle", "falcon"] }]
+values = { "title2": "Birds of Prey",
     		"description": "Lesson on all kinds of birds",
-    		"tags": ["eagle", "falcon"]},
-    		{ "title": "Birds of Prey2",
-    		"description": "Lesson on all kinds of angry birds",
-    		"tags": ["eagle", "falcon", "pelican"]}]
-
+    		"tags": ["eagle", "falcon"] }
 
 req = urllib2.Request(url, json.dumps(values))
 req.add_header('content-type', 'application/json')
