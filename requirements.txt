@@ -7,3 +7,5 @@ WTForms==1.0.1
 Werkzeug==0.8.3
 pymongo==2.1.1
 wsgiref==0.1.2
+nose>=1.0
+mocker>=1.0
