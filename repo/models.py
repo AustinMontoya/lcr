@@ -1,4 +1,4 @@
-from repo import db, fs
+from runserver import db, fs
 
 class Resource(db.Document):
 	name = db.StringField(required=True, min_length=3)

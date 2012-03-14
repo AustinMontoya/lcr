@@ -1,4 +1,3 @@
-from models import LearningObject
 import json
 
 result = {}
