@@ -1,21 +1,25 @@
 import json
 import util
+from flask import make_response
 import creation
 
 result = {}
 
 def create(request):
+	result['success'] = False
+	status_code = 200
+
 	if request is None:
-		result['success'] = False
 		result['error'] = "request data was not found"
-	else:
-		result['success'] = True
+		status_code = 400
 
 	# handle multi and inline parameters in request
 	multi = util.str2bool(request.args.get('multi'))
 	inline = util.str2bool(request.args.get('inline'))
-
-	result['id'] = creation.create_content(request.json)
+	try:
+		result['id'] = creation.create_content(request.json)
+	except:
+		success = False
 
 	#if multi is True:
 	#	if len(request.json) > 1:
@@ -33,8 +37,8 @@ def create(request):
 	#	print 'key: ' + item + ', value: ' + request.form[item]
 	#print request.files[1]
 	#creation.create_content()
-
-	return json.dumps(result)
+	result['success'] = True
+	return make_response(json.dumps(result), status_code)
 
 def retrieve(request, id):
 	if request is None:
