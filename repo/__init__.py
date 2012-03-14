@@ -1,20 +1,25 @@
-from flask import Flask
+from flask import Flask, g
 from flaskext.mongoalchemy import MongoAlchemy
 from gridFsFileStore import GridFsFileStore
-from settings import config
 
+db = MongoAlchemy()
 fs = None
-if config["FS_TYPE"] == 'gridfs':
-	fs = GridFsFileStore(config["APP_DB_NAME"], config["DB_HOST"], config["DB_PORT"])
-else:
-	raise Exception("No FileStore specified!")
 
-app = Flask(__name__)
+def create_app(config, enable_frontend=True):
+	app = Flask(__name__)
+	app.config["MONGOALCHEMY_DATABASE"] = config["APP_DB_NAME"]
 
-app.config["MONGOALCHEMY_DATABASE"] = config["APP_DB_NAME"]
-try:
-	db = MongoAlchemy(app)
-except:
-	print "Unable to connect to MongoDB. Make sure your connection settings are correct and that the server is running"
+	try:
+		db.init_app(app)
+	except:
+		print "Unable to connect to MongoDB. Make sure your connection settings are correct and that the server is running"
 
-import repo.routes
+	from api import api
+	from frontend import frontend
+
+	app.register_blueprint(api)
+
+	if enable_frontend:
+		app.register_blueprint(frontend)
+	
+	return app
