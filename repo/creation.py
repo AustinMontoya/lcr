@@ -1,3 +1,4 @@
+from models import LearningObject
 import json
 
 result = {}
@@ -5,6 +6,10 @@ result = {}
 def create_content(metadata):
 	# create a new content object in mongo
 	# return an id
+	
+	#print metadata
+	new_object = LearningObject(id=5, title='test', description='test description', tags='tag1, tag2')
+	#new_object.save()
 	result['id'] = 5
 
 	return result

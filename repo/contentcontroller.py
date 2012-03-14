@@ -2,8 +2,6 @@ import json
 import util
 import creation
 
-from werkzeug import secure_filename
-
 result = {}
 
 def create(request):
@@ -17,13 +15,16 @@ def create(request):
 	multi = util.str2bool(request.args.get('multi'))
 	inline = util.str2bool(request.args.get('inline'))
 
-	if multi is True:
-		if len(request.json) > 1:
-			for doc in request.json:
-				print doc['title']
+	creation.create_content(request.json)
+
+	#if multi is True:
+	#	if len(request.json) > 1:
+	#		for doc in request.json:
+	#			print doc['title']
 
 	if inline is True:
 		# parse out resource
+		pass
 
 	# create the document in mongo and return the id
 	#print request.json
