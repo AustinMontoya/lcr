@@ -15,7 +15,7 @@ def create(request):
 	multi = util.str2bool(request.args.get('multi'))
 	inline = util.str2bool(request.args.get('inline'))
 
-	creation.create_content(request.json)
+	result['id'] = creation.create_content(request.json)
 
 	#if multi is True:
 	#	if len(request.json) > 1:
@@ -33,7 +33,6 @@ def create(request):
 	#	print 'key: ' + item + ', value: ' + request.form[item]
 	#print request.files[1]
 	#creation.create_content()
-	result['id'] = "id of the newly created content"
 
 	return json.dumps(result)
 

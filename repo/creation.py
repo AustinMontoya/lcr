@@ -8,11 +8,10 @@ def create_content(metadata):
 	# return an id
 	
 	#print metadata
-	new_object = LearningObject(id=5, title='test', description='test description', tags='tag1, tag2')
-	#new_object.save()
-	result['id'] = 5
+	new_object = LearningObject(title='test', description='test description', tags=['tag1', 'tag2'])
+	new_object.save()
 
-	return result
+	return str(new_object.mongo_id)
 
 def create_resource_link(url):
 	# create a new content object in mongo
