@@ -7,7 +7,7 @@ fs = None
 
 def create_app(config, enable_frontend=True):
 	app = Flask(__name__)
-	app.config["MONGOALCHEMY_DATABASE"] = config["APP_DB_NAME"]
+	app.config.from_object(config)
 
 	try:
 		db.init_app(app)

@@ -8,8 +8,10 @@ def create_content(metadata):
 	# return an id
 	
 	#print metadata
-	new_object = LearningObject(title='test', description='test description', tags=['tag1', 'tag2'])
-	new_object.save()
+	#new_object = LearningObject(title='test', description='test description', tags=['tag1', 'tag2'])
+	#new_object.save()
+
+	raise Exception("new exception")
 
 	return str(new_object.mongo_id)
 

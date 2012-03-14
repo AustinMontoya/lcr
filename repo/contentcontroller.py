@@ -18,8 +18,10 @@ def create(request):
 	inline = util.str2bool(request.args.get('inline'))
 	try:
 		result['id'] = creation.create_content(request.json)
-	except:
-		success = False
+		result['success'] = True
+	except Exception as e:
+		result['success'] = False
+		result['error'] = str(e)
 
 	#if multi is True:
 	#	if len(request.json) > 1:
@@ -37,8 +39,8 @@ def create(request):
 	#	print 'key: ' + item + ', value: ' + request.form[item]
 	#print request.files[1]
 	#creation.create_content()
-	result['success'] = True
-	return make_response(json.dumps(result), status_code)
+
+	return json.dumps(result)
 
 def retrieve(request, id):
 	if request is None:
@@ -48,7 +50,7 @@ def retrieve(request, id):
 		result['success'] = True
 
 	# get the document out of mongo matching the given id
-	result['document'] = json.dumps({'title':'value','description':'value2'})
+	result['document'] = {'title':'value','description':'value2'}
 
 	return json.dumps(result)
 
