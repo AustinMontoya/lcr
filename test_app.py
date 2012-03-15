@@ -9,12 +9,12 @@ import unittest
 import json
 from flask import Flask
 from werkzeug.exceptions import NotFound
-from nose.tools import assert_equals
+from unittest import TestCase
 from repo import create_app, models
 from settings import TestConfig
 from flaskext.mongoalchemy import MongoAlchemy
 
-class BaseTestCase(unittest.TestCase):
+class BaseTestCase(TestCase):
 
     def setUp(self):
         super(BaseTestCase, self).setUp()
@@ -45,19 +45,21 @@ class BaseAppTestCase(BaseTestCase):
             lcr.remove()
 
     def test_content_create(self):
+        print json.dumps(self.testContent)
         response = self.app.post('/api/create/content', 
+                        content_type='application/json',
                         data=json.dumps(self.testContent),
-                        follow_redirects=False)
-        #assert_equals(response.status_code, 200)
-        print response.data
+                        follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
         vals = json.loads(response.data)
-        assert_equals(vals['success'],True)
-        assert 'id' in vals
+        self.assertEqual(vals['success'],True)
+        self.assertIn('id', vals)
 
     def test_content_retrieve(self):
         rv = self.app.get('/api/content/5')
         assert 'true' in rv.data
-        print rv.data
+       # print rv.data
 
 if __name__ == '__main__':
     unittest.main()        

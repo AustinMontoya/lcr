@@ -7,7 +7,7 @@ api = Blueprint('api', __name__, url_prefix='/api')
 
 # Content CRUD routes ---------------------------------
 # Create (supports optional inline and multi parameters)
-@api.route('/create/content/', methods=['POST'])
+@api.route('/create/content', methods=['POST'])
 def CreateContent():
 	return contentcontroller.create(request) 
 
