@@ -34,10 +34,20 @@ class BaseAppTestCase(BaseTestCase):
 
     def setup(self):
         self.app = create_app(TestConfig).test_client()
+        
+        self.IdNotInDB = '4c271729e13823182f000000'
+
         self.testContent = {
             'title' : 'testTitle',
             'description' : 'Test description',
             'tags' : ['tag1', 'tag2']
+        }
+        
+        self.testContentwID = {
+            'id' : 'test_id_1',
+            'title' : 'testTitle_1',
+            'description' : 'Test description_1',
+            'tags' : ['tag1_1', 'tag2_2']
         }
 
     def teardown(self):
@@ -45,13 +55,11 @@ class BaseAppTestCase(BaseTestCase):
             lcr.remove()
 
     def test_content_create_success(self):
-        print 'test_content_create(self) Test Document: ' + str(json.dumps(self.testContent))
         response = self.app.post('/api/create/content', 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print 'test_content_create(self) status code: ' + str(response.status_code)
         vals = json.loads(response.data)
         self.assertEqual(vals['success'],True)
         self.assertIn('id', vals)
@@ -67,12 +75,26 @@ class BaseAppTestCase(BaseTestCase):
         vals = json.loads(response.data)
         self.assertIn('error', vals)
 
+    def test_content_retrieve_success(self):
+        response_post = self.app.post('/api/create/content', 
+                content_type='application/json',
+                data=json.dumps(self.testContentwID),
+                follow_redirects=True)
+        self.assertEqual(response_post.status_code, 200)
+        vals_post = json.loads(response_post.data)
+        self.assertEqual(vals_post['success'],True)
 
-    def test_content_retrieve(self):
-        rv = self.app.get('/api/content/5')
-        assert 'true' in rv.data
-       # print rv.data
+        response_get = self.app.get('/api/content/' + str(vals_post['id']))
+        vals_get = json.loads(response_get.data)
+        self.assertIn('id', vals_get)
+        self.assertEqual(vals_get['id'], vals_post['id'])
 
+    def test_content_retrieve_fail(self):
+        response_get = self.app.get('/api/content/' + self.IdNotInDB)
+        vals_get = json.loads(response_get.data)
+        print str(json.dumps(vals_get))
+        self.assertIn('id', vals_get)
+        self.assertNotEqual(vals_get['id'], self.IdNotInDB)
 
     def test_content_update(self):
         raise NotImplementedError("TODO")
