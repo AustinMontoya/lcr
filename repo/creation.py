@@ -27,7 +27,6 @@ def create_content(metadata):
 										description=incoming_description, 
 										tags=incoming_tags)
 			new_object.save()
-			
 			id = str(new_object.mongo_id)
 		except:
 			raise Exception("error saving object to database")
