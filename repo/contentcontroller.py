@@ -3,14 +3,18 @@ from flask import render_template
 import json
 import util
 import crud_helpers
+from crud_helpers import HelperException
 
 def create(request):
 	success = True
 	result = {}
+	error = ''
+	status_code = 200
 
 	if request is None:
 		success = False
-		make_response(render_template('not_found.html'), 400)
+		error = "Bad request.  Somehow the request wasn't found."
+		status_code = 400
 
 	# handle multi and inline parameters in request
 	multi = util.str2bool(request.args.get('multi'))
@@ -28,18 +32,18 @@ def create(request):
 			#			print doc['title']
 			pass
 
-	print request.headers['content-type']
-
 	if 'application/json' in request.headers['content-type']:
 		# create the content object
 		try:
 			result['id'] = crud_helpers.create_content(request.json)
-		except Exception as e:
+		except HelperException as e:
 			success = False
-			error = str(e)
+			error = e.error
+			status_code = e.status_code
 	else:
 		success = False
-		error = "The content-type was not of the expected type.  The content-type found was " + request.headers["content-type"] + ", whereas the content-type expected was application/json."		
+		error = "The content-type was not of the expected type.  The content-type found was " + request.headers["content-type"] + ", whereas the content-type expected was application/json."
+		status_code = 400
 
 	# handle inline parameter in request
 	if inline is True:
@@ -48,58 +52,105 @@ def create(request):
 		# TODO
 
 	if success is True:
-		response = createJsonResponse(result, 200)
+		response = createJsonResponse(result, status_code)
 	else:
 		result['error'] = error
-		response = createJsonResponse(result, 400)
+		response = createJsonResponse(result, status_code)
 	
 	return response
 
 def retrieve(request, id):
 	# use HTTP status codes
 	response = ''
+	result = {}
+	success = True
+	error = ''
+	status_code = 200
 
 	if request is None:
-		response = make_response(render_template('bad_request.html'), 400)
+		success = False
+		error = "Bad request.  Somehow the request wasn't found."
+		status_code = 400
 
 	if id is None:
-		response = make_response(render_template('bad_request.html'), 400)
+		success = False
+		error = "Bad request.  No id was found."
+		status_code = 400
 	
 	try:
 		result = crud_helpers.retrieve_content(id)
-		response = createJsonResponse(result, 200)
-	except:
-		response =  make_response(render_template('not_found.html'), 404)
+	except HelperException as e:
+		success = False
+		error = e.error
+		status_code = e.status_code
+
+	if success is True:
+		response = createJsonResponse(result, status_code)
+	else:
+		result['error'] = error
+		response = createJsonResponse(result, status_code)
 
 	return response
 
 def update(request, id):
+	response = ''
+	result = {}
 	success = True
 	error = ''
+	status_code = 200
 
 	if request is None:
 		success = False
-		error = "Request data was not found."
+		error = "Bad request.  Somehow the request wasn't found."
+		status_code = 400
+
+	if 'application/json' in request.headers['content-type']:
+		# create the content object
+		try:
+			crud_helpers.update_content(id, request.json)
+		except HelperException as e:
+			success = False
+			error = e.error
+			status_code = e.status_code
+	else:
+		success = False
+		error = "The content-type was not of the expected type.  The content-type found was " + request.headers["content-type"] + ", whereas the content-type expected was application/json."
+		status_code = 400		
 
 	if success is True:
-		result['success'] = True
+		response = make_response(None, status_code)
 	else:
-		result['success'] = False
 		result['error'] = error
+		response = createJsonResponse(result, status_code)
 
-	return json.dumps(result)
+	return response
 
 def delete(request, id):
+	response = ''
+	result = {}
 	success = True
 	error = ''
+	status_code = 200
+
+	if request is None:
+		success = False
+		error = "Bad request.  Somehow the request wasn't found."
+		status_code = 400
+
+	try:
+		crud_helpers.delete_content(id)
+	except HelperException as e:
+		success = False
+		error = e.error
+		status_code = e.status_code
 
 	if success is True:
-		result['success'] = True
+		response = make_response(None, status_code)
 	else:
-		result['success'] = False
 		result['error'] = error
+		response = createJsonResponse(result, status_code)
 
-	return json.dumps(result)
+	return response
 
 def createJsonResponse(doc, status_code):
 	response = make_response(json.dumps(doc), status_code)
