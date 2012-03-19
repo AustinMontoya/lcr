@@ -7,24 +7,29 @@
 			margin: 0;
 		}
 	</style>
-	<script type='text/javascript' src="/static/js/lib/knockout-2.0.0.debug.js"></script>
+	<script type='text/javascript' src="/static/js/lib/knockout-2.0.0.js"></script>
 	<script type='text/javascript' src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type='text/javascript' src="/static/js/lib/sammy-latest.min.js"></script>
+	<script type='text/javascript' src="/static/js/create-and-edit-viewmodel.js"></script>
 {% endblock %}
 {% block content %}
-	<h1>Add a Resource</h1>
+	<h1>Edit Resource</h1>
+	<div id="statusBox" data-bind="text: notification">
+	</div>
  	<p>
  		Fill out the following fields:
  	</p>
  	<form id='CreateForm' class='lo-form-edit' action='#/post/form' method="POST">
  		<ul class='error-container' data-bind="foreach: learningObject.errors, visible: learningObject.errors().length > 0">
- 			<li data-bind="$data" />
+ 			<li data-bind="text: $data" />
  		</ul>
- 		<p><label>*Title:</label><br/><input type="text" data-bind="text: learningObject.title"/></p>
- 		<p><label>Description:</label><br/><textarea data-bind="text: learningObject.description"></textarea></p>
- 		<p><label>Tags:</label><br/><input data-bind="text: learningObject.tags" /></p>
+ 		<p><label>*Title:</label><br/><input type="text" data-bind="value: learningObject.title"/></p>
+ 		<p><label>Description:</label><br/><textarea data-bind="value: learningObject.description"></textarea></p>
+ 		<p><label>Tags:</label><br/><input data-bind="value: learningObject.tags" /></p>
  	</form>
- 	<table data-bind="foreach: learningObject.resources, visible: learningObject.resources().length > 0">
+ 	<button data-bind="click: addResource">Add a resource</button>
+ 	<button data-bind="click: saveContent, enable: learningObject.resources().length > 0">Save Learning Content</button>
+ 	<table data-bind="visible: learningObject.resources().length > 0">
  		<thead>
  			<tr>
  				<th>Resource Type</th>
@@ -33,18 +38,18 @@
  				<th></th>
  			</tr>
  		</thead>
- 		<tbody>
+ 		<tbody data-bind="foreach: learningObject.resources">
  			<tr>
- 				<td><select data-bind="options: $root.resourceTypes, value: type()"></select></td>
+ 				<td><select data-bind="options: $root.resourceTypes, value: type"></select></td>
  				<td>
- 					<span data-bind="visible: type() == 'url' && resourceId == ''">
- 						<label>Url:</label><input type='text' data-bind="text: title" />
+ 					<span data-bind="visible: type() == 'url' && id == null">
+ 						<label>Url:</label> <input type='text' data-bind="value: currentUrlValue" />
  					</span>
- 					<span data-bind="visible: type() == 'file' && resourceId == ''">
- 						<label>File:</label><input type='file' />
+ 					<span data-bind="visible: type() == 'file' && id == null">
+ 						<label>File:</label> <input type='file' data-bind="value: currentFileValue" />
  					</span>
- 					<span data-bind="visible: resourceId != ''">
- 						<a data-bind="attr { href: locator() }, text: locator"></a>
+ 					<span data-bind="visible: id != null">
+ 						<a data-bind="attr: { href: locator() }, text: locator"></a>
  					</span>
  				</td>
  				<td><a href="#" data-bind="click: $root.removeResource">Remove</a></td>
@@ -52,121 +57,7 @@
  			</tr>
  		</tbody>
  	</table>
- 	<button data-bind="click: addResource">Add a resource</button>
  	<script type='text/javascript'>
-		function LearningObject(data) {
-
-			// Data
-			var self = this;
-			var title = data ? data.title : "",
-				id = data ? data.id : null,
-				description = data && data.description ? data.description : "",
-				tags = data && data.tags ? data.tags.join(',') : "",
-				resources = [];
-
-			this.id = id;
-			this.title = ko.observable(title);
-			this.description = ko.observable(description);
-			this.tags = ko.observable(tags);
-			this.resources = ko.observableArray(resources);
-
-			if(data && data.resources) {
-				for (var id in data.resources) {
-					$.get('/api/resource/'+id+"?metadata=true", function(resourceMetadata) {
-						this.resources.push(new Resource(item));
-					});
-				}
-			}
-			self.errors = ko.observableArray();
-			self.metadata = ko.computed(function() {
-				return {
-					"title": self.title(),
-					"description" : self.description(),
-					"tags" : self.tags().split
-				}
-			});
-			// Behaviors
-			self.validate = function() {
-				self.errors().removeAll();
-				if(!title || title == "")
-					self.errors().push("Title is required.");
-				if(description && description.length > 140)
-					self.errors().push("Description cannot exceed 140 characters.");
-				if(resources().length < 1)
-					self.errors().push("At least one resource must be included to upload.")
-				for(var resource in resources())
-					resource.validate();
-
-				return self.errors().length === 0 
-						&& self.resources().errors().length === 0;
-			}
-		}
-
-		function Resource(data) {
-			// Data 
-			var self = this;
-			var id = data && data.id ? data.id : null,
-				resourceId = data && data.resourceId ? data.resourceId : "",
-				title = data && data.title ? data.title : "",
-				type = data && data.type ? data.type : "file";
-
-			self.id = id;
-			self.title = title;
-			self.type = ko.observable(type);
-			self.resourceId = resourceId;
-			self.errors = ko.observableArray();
-
-			self.errorList = ko.computed(function(){
-				var html = "<ul class='error-container'>";
-				for(var error in self.errors())
-					html += "<li>"+error+"</li>";
-				return html+"</ul>";
-			});
-
-			self.locator = ko.computed(function() {
-				return "http://"+location.host+"/api/resource/"+self.id;
-			});
-
-			// Behaviors
-			self.validate = function() {
-				// TODO: Figure out what validation needs to be performed
-				return true;
-			}
-		}
-
-		function CreateAndEditViewModel() {
-			var self = this;
-			self.resourceTypes = ["url", "file"];
-			self.resourceDeleteQueue = [];
-
-			// Behaviors
-			self.addResource = function() {	self.learningObject.resources.push(new Resource({ type: "file" })); };
-			self.removeResource = function(resource) { self.resourceDeleteQueue.push(resource); }
-
-			// Client-side routing
-			Sammy(function() {
-				this.get('/edit/:id', function() {
-					$.get('/api/content/'+this.params['id'], function(data) {
-						self.learningObject = new LearningObject(data);
-						self.resources = self.learningObject.resources();
-					});
-				});
-				this.get('/create', function() {
-					self.learningObject = new LearningObject();
-					self.resources = self.learningObject.resources();
-				});
-				this.post('#/post/form', function() {
-					if(self.learningObject.validate()) {
-						//Step 1: Create the content object
-						var data = 
-						$.ajax({
-							contentType: "application/json",
-
-						})
-					}
-				});
-			}).run();
-		}
 		ko.applyBindings(new CreateAndEditViewModel());
 	</script>
 {% endblock %}
