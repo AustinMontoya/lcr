@@ -2,13 +2,13 @@ import urllib
 import urllib2
 import json
 
-url = "http://localhost:5000/api/create/content/?multi=true"
+url = "http://localhost:5000/api/create/content?multi=true"
 #values = [{ "title": "Birds of Prey",
 #    		"description": "Lesson on all kinds of birds",
 #    		"tags": ["eagle", "falcon"] }, { "title": "Birds of Prey",
 #    		"description": "Lesson on all kinds of birds",
 #    		"tags": ["eagle", "falcon"] }]
-values = { "title2": "Birds of Prey",
+values = { "title": "Birds of Prey",
     		"description": "Lesson on all kinds of birds",
     		"tags": ["eagle", "falcon"] }
 
