@@ -1,13 +1,26 @@
-from repo import db, models
+from repo import models
 import json
 from types import NoneType
 from models import LearningObject
 
-def create_content(metadata):
-    # create a new content object in mongo
-    # return an id
+class HelperException(Exception):
+    """Internal class to manage error messages and status codes"""
+    status_code = ''
+    error = ''
 
+    def __init__(self, error, status_code):
+        self.error = error
+        self.status_code = status_code
+
+    def setError(self, error):
+        self.error = error
+
+    def setStatusCode(self, status_code):
+        self.status_code = status_code
+
+def create_content(metadata):
     id = ''
+    result = ''
 
     if type(metadata) is dict:
 
@@ -21,7 +34,7 @@ def create_content(metadata):
             incoming_description = metadata['description']
             incoming_tags = metadata['tags']
         except:
-            raise Exception("The metadata used to create the content object was not in the expected form.")
+            raise HelperException("The metadata used to create the content object was not in the expected form.", 400)
 
         # create the content object
         try:
@@ -32,26 +45,36 @@ def create_content(metadata):
             
             id = str(new_object.mongo_id)
         except:
-            raise Exception("The object could not be created in the database.")
+            raise HelperException("The object could not be created in the database.", 500)
     else:
-        raise Exception("The metadata was not of the expected type.  The type found was " + str(type(metadata)) + ", whereas the type expected was dict.")
+        raise HelperException("The metadata was not of the expected type.  The type found was " + str(type(metadata)) + ", whereas the type expected was dict.", 400)
 
     return id
 
-def create_resource_link(url):
-    # create a new content object in mongo
-    # return an id
-    result['id'] = 10
+def retrieve_content(id):
+    document = ''
+    result = ''
+
+    str_id = str(id)
+
+    document = models.LearningObject.query.get(str_id)
+
+    if isinstance(document, NoneType):
+        raise HelperException("No content item was found with an id of " + str_id + ".", 404)
+        return
+
+    # convert mongo document to a python dictionary
+    result = document.wrap()
+
+    del result['_id']
 
     return result
 
-def create_resource_file(file):
-    # create a new resource object in mongo
-    # return an id
+def update_content(id, metadata):
+    document = ''
+    result = '' 
 
-    id = ''
-
-    if type(file) is dict:
+    if type(metadata) is dict:
 
         incoming_title = ''
         incoming_description = ''
@@ -63,40 +86,47 @@ def create_resource_file(file):
             incoming_description = metadata['description']
             incoming_tags = metadata['tags']
         except:
-            raise Exception("The metadata used to create the content object was not in the expected form.")
+            raise HelperException("The metadata provided was not in the expected form.", 400)
+
+        # get the object by id
+        str_id = str(id)  
+        
+        document = models.LearningObject.query.get(str_id)
+
+        if isinstance(document, NoneType):
+            raise HelperException("No content item was found with an id of " + str_id + ".", 404)
+            return
 
         # create the content object
         try:
-            new_object = LearningObject(title=incoming_title, 
-                                        description=incoming_description, 
-                                        tags=incoming_tags)
-            new_object.save()
+            document.title = incoming_title 
+            document.description = incoming_description
+            document.tags = incoming_tags
             
-            id = str(new_object.mongo_id)
+            document.save()
         except:
-            raise Exception("error saving object to database")
+            raise HelperException("The object could not be updated in the database.", 500)
     else:
-        raise Exception("invalid JSON")
-    result['id'] = 15
+        raise HelperException("The metadata was not of the expected type.  The type found was " + str(type(metadata)) + ", whereas the type expected was dict.", 400)
 
-    return result
+    return
 
-def retrieve_content(id):
+def delete_content(id):
 
     document = ''
 
-    str_id = str(id)
-
+    # get the object by id
+    str_id = str(id)  
+    
     document = models.LearningObject.query.get(str_id)
 
     if isinstance(document, NoneType):
-        raise Exception("The requested id was not found")
+        raise HelperException("No content item was found with an id of " + str_id + ".", 404)
         return
 
-    # convert mongo document to a python dictionary
-    result = document.wrap()
+    try:
+        document.remove()
+    except:
+        raise HelperException("The object could not be removed from the database.", 500)
 
-    del result['_id']
-
-    return result
-
+    return    
