@@ -2,22 +2,17 @@ function LearningObject(data) {
 
 	// Data
 	var self = this;
-	var title = data ? data.title : "",
-		id = data ? data.id : null,
-		description = data && data.description ? data.description : "",
-		tags = data && data.tags ? data.tags.join(',') : "",
-		resources = [];
 
-	this.id = id;
-	this.title = ko.observable(title);
-	this.description = ko.observable(description);
-	this.tags = ko.observable(tags);
-	this.resources = ko.observableArray(resources);
+	self.id = null;
+	self.title = ko.observable();
+	self.description = ko.observable();
+	self.tags = ko.observable("");
+	self.resources = ko.observableArray();
 
 	if(data && data.resources) {
 		for (var id in data.resources) {
 			$.get('/api/resource/'+id+"?metadata=true", function(resourceMetadata) {
-				this.resources.push(new Resource(item));
+				self.resources.push(new Resource(item));
 			});
 		}
 	}
@@ -45,6 +40,21 @@ function LearningObject(data) {
 
 		self.errors(newErrors);
 		return self.errors().length === 0 && !hasResourceErrors;
+	}
+
+	self.load = function(data) {
+		self.id = data.id;
+		self.title(data.title);
+		self.description(data.description);
+		self.tags(data.tags.join(','));
+
+		if(data.resources) {
+			for (var id in data.resources) {
+				$.get('/api/resource/'+id+"?metadata=true", function(resourceMetadata) {
+					self.resources.push(new Resource(item));
+				});
+			}
+		}	
 	}
 }
 
@@ -77,8 +87,7 @@ function Resource(data) {
 	// Behaviors
 	self.validate = function() {
 		self.errors([]);
-		if(!self.type() 
-			|| (self.type() == "file" && !self.currentFileValue())
+		if((self.type() == "file" && !self.currentFileValue())
 			|| (self.type() == "url" && !self.currentUrlValue())) {
 			self.errors.push(self.type()+" cannot be empty");
 			return false;
@@ -105,7 +114,6 @@ function CreateAndEditViewModel() {
 		self.learningObject.resources.remove(resource);
 	}
 
-	
 	self.saveContent = function() {
 		var onSuccess = function(data) {
 			if(self.mode == "create") {
@@ -147,11 +155,13 @@ function CreateAndEditViewModel() {
 	// Client-side routing
 	Sammy(function() {
 		this.get('/edit/:id', function() {
+			self.learningObject = new LearningObject();
 			$.get('/api/content/'+this.params['id'], function(data) {
 				self.mode = 'update';
-				self.learningObject = new LearningObject(data);
+				self.learningObject.load(data);
 				self.resources = self.learningObject.resources();
-			});
+			})
+			.error(function() { window.location = '/404' });
 		});
 		this.get('/create', function() {
 			self.mode = 'create';
