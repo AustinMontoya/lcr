@@ -44,8 +44,8 @@ def create_content(metadata):
             new_object.save()
             
             id = str(new_object.mongo_id)
-        except:
-            raise HelperException("The object could not be created in the database.", 500)
+        except Exception as e:
+            raise HelperException("The object could not be created in the database. " + str(e), 500)
     else:
         raise HelperException("The metadata was not of the expected type.  The type found was " + str(type(metadata)) + ", whereas the type expected was dict.", 400)
 
@@ -85,8 +85,8 @@ def update_content(id, metadata):
             incoming_title = metadata['title']
             incoming_description = metadata['description']
             incoming_tags = metadata['tags']
-        except:
-            raise HelperException("The metadata provided was not in the expected form.", 400)
+        except Exception as e:
+            raise HelperException("The metadata provided was not in the expected form. "  + str(e), 400)
 
         # get the object by id
         str_id = str(id)  
@@ -104,8 +104,8 @@ def update_content(id, metadata):
             document.tags = incoming_tags
             
             document.save()
-        except:
-            raise HelperException("The object could not be updated in the database.", 500)
+        except Exception as e:
+            raise HelperException("The object could not be updated in the database. " + str(e), 500)
     else:
         raise HelperException("The metadata was not of the expected type.  The type found was " + str(type(metadata)) + ", whereas the type expected was dict.", 400)
 
@@ -126,7 +126,7 @@ def delete_content(id):
 
     try:
         document.remove()
-    except:
-        raise HelperException("The object could not be removed from the database.", 500)
+    except Exception as e:
+        raise HelperException("The object could not be removed from the database. " + str(e), 500)
 
     return    
