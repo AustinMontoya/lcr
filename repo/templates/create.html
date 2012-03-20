@@ -2,18 +2,11 @@
 {% block title %}Add Learning Content{% endblock %}
 {% block head %}
 	{{ super() }}
-	<style type='text/css'>
-		.create-resource dd {
-			margin: 0;
-		}
-	</style>
-	<script type='text/javascript' src="/static/js/lib/knockout-2.0.0.js"></script>
-	<script type='text/javascript' src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type='text/javascript' src="/static/js/lib/sammy-latest.min.js"></script>
 	<script type='text/javascript' src="/static/js/create-and-edit-viewmodel.js"></script>
 {% endblock %}
 {% block content %}
-	<h1>Edit Resource</h1>
+	<h1>Content Editor</h1>
 	<div id="statusBox" data-bind="text: notification">
 	</div>
  	<p>
@@ -29,6 +22,7 @@
  	</form>
  	<button data-bind="click: addResource">Add a resource</button>
  	<button data-bind="click: saveContent, enable: learningObject.resources().length > 0">Save Learning Content</button>
+ 	<button data-bind="click: deleteContent, enable: mode() == 'update', visible: mode() == 'update'">Delete</button>
  	<table data-bind="visible: learningObject.resources().length > 0">
  		<thead>
  			<tr>
@@ -42,13 +36,13 @@
  			<tr>
  				<td><select data-bind="options: $root.resourceTypes, value: type"></select></td>
  				<td>
- 					<span data-bind="visible: type() == 'url' && id == null">
+ 					<span data-bind="visible: type() == 'url' && id() == undefined">
  						<label>Url:</label> <input type='text' data-bind="value: currentUrlValue" />
  					</span>
- 					<span data-bind="visible: type() == 'file' && id == null">
+ 					<span data-bind="visible: type() == 'file' && id() == undefined">
  						<label>File:</label> <input type='file' data-bind="value: currentFileValue" />
  					</span>
- 					<span data-bind="visible: id != null">
+ 					<span data-bind="visible: id() !== undefined">
  						<a data-bind="attr: { href: locator() }, text: locator"></a>
  					</span>
  				</td>
