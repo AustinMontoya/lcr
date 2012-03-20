@@ -1,23 +1,41 @@
-from repo import db, fs
+import datetime
+from dictshield.document import Document, EmbeddedDocument, diff_id_field
+from dictshield.fields import StringField, IntField, DateTimeField, URLField
+from dictshield.fields.compound import ListField, EmbeddedDocumentField
+from dictshield.fields.mongo import ObjectIdField
 
-class Resource(db.Document):
-	name = db.StringField(required=True, min_length=3)
-	type = db.EnumField(db.StringField(), "file", "resource")
+from bson.objectid import ObjectId
 
-class FileResource(Resource):
-	gridFsId = db.ObjectIdField()
+##
+# Resources
+##
 
-	def getData(self):
-		return fs.getFile(self.gridFsId)
+class Resource(EmbeddedDocument):
+	'''A general resource representing an piece of content that is
+	valuable for learning the topic of the containing content package'''
 
-	def setData(self, data):
-		self.gridFsId = fs.setFile(data)
+	name = StringField(min_length=1, max_length=50, required=True)
+	last_updated = DateTimeField(required=True)
 
 class WebResource(Resource):
-	url = db.StringField(required=True, min_length=5)
+	url = URLField(required=True)
 
-class LearningObject(db.Document):
-	title = db.StringField(min_length=3, max_length=50, required=True)
-	description = db.StringField(max_length=140, required=False)
-	tags = db.ListField(db.StringField(), required=False)
-	resources = db.ListField(db.DocumentField(Resource), required=False)
+class FileResource(Resource):
+	_private_fields = ['fileId']
+	fileId = ObjectIdField(required=True)
+	mimeType = StringField(max_length=50)
+
+##
+# Containers
+##
+
+@diff_id_field(ObjectIdField, ['id'])
+class Package(Document):
+	'''Holds general information about a collection of loosely organized
+	resources related to a given topic.'''
+
+	title = StringField(min_length=1, max_length=50, required=True)
+	description = StringField(max_length=140)
+	tags = ListField(StringField(max_length=30))
+	resources = ListField(EmbeddedDocumentField(Resource))
+	last_updated = DateTimeField(required=True)

@@ -1,5 +1,4 @@
 from flask import Blueprint, current_app, request, make_response, url_for, render_template
-import models
 import resourcecontroller
 import contentcontroller
 

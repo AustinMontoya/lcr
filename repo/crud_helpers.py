@@ -1,7 +1,10 @@
-from repo import models
+from flask import g
+from repo import mongo
+from repo.models import Package, WebResource, FileResource
+from datetime import datetime
 import json
 from types import NoneType
-from models import LearningObject
+
 
 class HelperException(Exception):
     """Internal class to manage error messages and status codes"""
@@ -18,115 +21,49 @@ class HelperException(Exception):
     def setStatusCode(self, status_code):
         self.status_code = status_code
 
-def create_content(metadata):
-    id = ''
-    result = ''
+def save_package(metadata, id=None):
+    metadata['last_updated'] = datetime.now()
 
-    if type(metadata) is dict:
+    if id is not None:
+        metadata['_id'] = id
 
-        incoming_title = ''
-        incoming_description = ''
-        incoming_tags = ''
+    package = Package(**metadata)
 
-        # parse the metadata
-        try:
-            incoming_title = metadata['title']
-            incoming_description = metadata['description']
-            incoming_tags = metadata['tags']
-        except:
-            raise HelperException("The metadata used to create the content object was not in the expected form.", 400)
+    # parse the metadata
+    try:        
+        package.validate()
+    except:
+        raise HelperException("The metadata used to create the package object was not in the expected form.", 400)
 
-        # create the content object
-        try:
-            new_object = LearningObject(title=incoming_title, 
-                                        description=incoming_description, 
-                                        tags=incoming_tags)
-            new_object.save()
-            
-            id = str(new_object.mongo_id)
-        except Exception as e:
-            raise HelperException("The object could not be created in the database. " + str(e), 500)
-    else:
-        raise HelperException("The metadata was not of the expected type.  The type found was " + str(type(metadata)) + ", whereas the type expected was dict.", 400)
-
-    return id
-
-def retrieve_content(id):
-    document = ''
-    result = ''
-
-    str_id = str(id)
-
-    document = models.LearningObject.query.get(str_id)
-
-    if isinstance(document, NoneType):
-        raise HelperException("No content item was found with an id of " + str_id + ".", 404)
-        return
-
-    # convert mongo document to a python dictionary
-    result = document.wrap()
-
-    del result['_id']
-
-    return result
-
-def update_content(id, metadata):
-    document = ''
-    result = '' 
-
-    if type(metadata) is dict:
-
-        incoming_title = ''
-        incoming_description = ''
-        incoming_tags = ''
-
-        # parse the metadata
-        try:
-            incoming_title = metadata['title']
-            incoming_description = metadata['description']
-            incoming_tags = metadata['tags']
-        except Exception as e:
-            raise HelperException("The metadata provided was not in the expected form. "  + str(e), 400)
-
-        # get the object by id
-        str_id = str(id)  
-        
-        document = models.LearningObject.query.get(str_id)
-
-        if isinstance(document, NoneType):
-            raise HelperException("No content item was found with an id of " + str_id + ".", 404)
-            return
-
-        # create the content object
-        try:
-            document.title = incoming_title 
-            document.description = incoming_description
-            document.tags = incoming_tags
-            
-            document.save()
-        except Exception as e:
-            raise HelperException("The object could not be updated in the database. " + str(e), 500)
-    else:
-        raise HelperException("The metadata was not of the expected type.  The type found was " + str(type(metadata)) + ", whereas the type expected was dict.", 400)
-
-    return
-
-def delete_content(id):
-
-    document = ''
-
-    # get the object by id
-    str_id = str(id)  
-    
-    document = models.LearningObject.query.get(str_id)
-
-    if isinstance(document, NoneType):
-        raise HelperException("No content item was found with an id of " + str_id + ".", 404)
-        return
-
+    # create the package object
     try:
-        document.remove()
+        return mongo.db.packages.save(package.to_python())
+    except Exception as e:
+        raise HelperException("The learning package could not be saved. " + str(e), 500)
+
+def create_package(metadata):
+    id = save_package(metadata)
+    return str(id)
+
+def retrieve_package(id):
+    str_id = str(id)
+    print str_id
+
+    document = mongo.db.packages.find_one({ "_id" : str_id})
+
+    if isinstance(document, NoneType):
+        raise HelperException("No package item was found with an id of " + str_id + ".", 404)
+
+    del document['_id']
+    document['id'] = str_id
+
+    return document
+
+def update_package(id, metadata):
+    save_package(metadata, id)
+
+def delete_package(id):
+    try:
+        mongo.db.packages.remove(id)
     except Exception as e:
         raise HelperException("The object could not be removed from the database. " + str(e), 500)
-
-    return    
