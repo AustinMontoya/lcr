@@ -9,10 +9,7 @@ def create_app(config, enable_frontend=True):
 	app = Flask(__name__)
 	app.config.from_object(config)
 
-	try:
-		db.init_app(app)
-	except:
-		print "Unable to connect to MongoDB. Make sure your connection settings are correct and that the server is running"
+	db.init_app(app)
 
 	from api import api
 	from frontend import frontend
