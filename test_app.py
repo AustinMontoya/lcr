@@ -10,9 +10,9 @@ import json
 from flask import Flask
 from werkzeug.exceptions import NotFound
 from unittest import TestCase
-from repo import create_app, models
+from repo import create_app, mongo
 from settings import TestConfig
-from flaskext.mongoalchemy import MongoAlchemy
+import pymongo
 
 class BaseTestCase(TestCase):
 
@@ -51,8 +51,8 @@ class BaseAppTestCase(BaseTestCase):
         }
 
     def teardown(self):
-        for lcr in models.LearningObject.query.all():
-            lcr.remove()
+        conn = pymongo.Connection(TestConfig.MONGO_HOST,TestConfig.MONGO_PORT)
+        conn[TestConfig.MONGO_DBNAME].drop_collection("learningObjects")
 
     def test_content_create_success(self):
         response = self.app.post('/api/create/content', 
