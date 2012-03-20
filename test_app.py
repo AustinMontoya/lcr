@@ -71,7 +71,7 @@ class BaseAppTestCase(BaseTestCase):
         vals = json.loads(response.data)
         self.assertIn('id', vals)
 
-    def test_content_create_fail(self):
+    def test_content_create_fail_bad_type(self):
         print '\n2: ' 
         bad_content = self.testContent
         bad_content['title'] = True
@@ -80,9 +80,19 @@ class BaseAppTestCase(BaseTestCase):
                         data=json.dumps(bad_content),
                         follow_redirects=True)
         print '\n' + str(json.dumps(response.data)) + ' ' + str(response.status_code)
-        self.assertGreaterEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
         vals = json.loads(response.data)
         self.assertIn('error', vals)
+        self.assertIn("The object could not be created in the database. ", vals["error"])
+
+    def test_content_create_fail_invalid_json(self):
+        raise NotImplementedError()
+
+    def test_content_create_fail_missing_metadata(self):
+        raise NotImplementedError()
+
+    def test_content_create_fail_invalid_content_type(self):
+        raise NotImplementedError()
 
     def test_content_retrieve_success(self):
         print '\n3: '

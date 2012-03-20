@@ -2,8 +2,21 @@ from flask import Blueprint, current_app, request, make_response, url_for, rende
 import models
 import resourcecontroller
 import contentcontroller
+import json
 
 api = Blueprint('api', __name__, url_prefix='/api')
+
+@api.app_errorhandler(400)
+def BadRequest(e):
+    msg = { 'error' : 'Bad request' }
+    try:
+        json.loads(request.data)
+    except:
+        msg['error'] += ": Invalid JSON in request body"
+
+    response = make_response(json.dumps(msg), 400)
+    response.headers["content-type"] = "application/json"
+    return response
 
 # Content CRUD routes ---------------------------------
 # Create (supports optional inline and multi parameters)
@@ -27,7 +40,7 @@ def DeleteContent(id):
 	return contentcontroller.delete(request, id) 
 
 # Resource CRUD routes ---------------------------------
-# Create (supports optional multi parameters)
+# Create (supports type, name, and multi parameters)
 @api.route('/create/resource/<id>', methods=['POST'])
 def CreateResource(id):
 	return resourcecontroller.create(request, id) 
