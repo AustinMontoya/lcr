@@ -2,7 +2,7 @@ from repo import db, fs
 
 class Resource(db.Document):
 	name = db.StringField(required=True, min_length=3)
-	type = db.EnumField(db.StringField(), "file", "resource")
+	type = db.EnumField(db.StringField(), "file", "url")
 
 class FileResource(Resource):
 	gridFsId = db.ObjectIdField()
@@ -15,6 +15,7 @@ class FileResource(Resource):
 
 class WebResource(Resource):
 	url = db.StringField(required=True, min_length=5)
+	type = "url"
 
 class LearningObject(db.Document):
 	title = db.StringField(min_length=3, max_length=50, required=True)
