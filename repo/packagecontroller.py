@@ -85,7 +85,8 @@ def retrieve(request, id):
 		status_code = e.status_code
 
 	if success is True:
-		response = createJsonResponse(result, status_code)
+		response = make_response(result, 200)
+		response.headers['content-type'] = 'application/json'
 	else:
 		result['error'] = error
 		response = createJsonResponse(result, status_code)

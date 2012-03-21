@@ -4,7 +4,7 @@ from repo.models import Package, WebResource, FileResource
 from datetime import datetime
 import json
 from types import NoneType
-
+from bson.objectid import ObjectId, InvalidId
 
 class HelperException(Exception):
     """Internal class to manage error messages and status codes"""
@@ -37,6 +37,7 @@ def save_package(metadata, id=None):
 
     # create the package object
     try:
+        print package.to_json()
         return mongo.db.packages.save(package.to_python())
     except Exception as e:
         raise HelperException("The learning package could not be saved. " + str(e), 500)
@@ -46,18 +47,19 @@ def create_package(metadata):
     return str(id)
 
 def retrieve_package(id):
-    str_id = str(id)
-    print str_id
+    obj_id = None
+    
+    try:
+        obj_id = ObjectId(id)
+    except InvalidId:
+        raise HelperException("'%s' is not a valid id." % id, 400)
+    
+    try:
+        document = Package(**mongo.db.packages.find_one({ "_id" : ObjectId(obj_id)}))
+    except:
+        raise HelperException("No package item was found with an id of " + id + ".", 404)
 
-    document = mongo.db.packages.find_one({ "_id" : str_id})
-
-    if isinstance(document, NoneType):
-        raise HelperException("No package item was found with an id of " + str_id + ".", 404)
-
-    del document['_id']
-    document['id'] = str_id
-
-    return document
+    return Package.make_json_publicsafe(document)
 
 def update_package(id, metadata):
     save_package(metadata, id)
