@@ -23,7 +23,7 @@ def create(request, id):
 
 	return json.dumps(result)
 
-def retrieve(request, id):
+def retrieve(request, id, resource_number):
 	success = True
 	error = ''
 
@@ -43,7 +43,7 @@ def retrieve(request, id):
 
 	return json.dumps(result)
 
-def update(request, id):
+def update(request, id, resource_number):
 	success = True
 	error = ''
 
@@ -59,7 +59,7 @@ def update(request, id):
 
 	return json.dumps(result)
 
-def delete(request, id):
+def delete(request, id, resource_number):
 	success = True
 	error = ''
 
