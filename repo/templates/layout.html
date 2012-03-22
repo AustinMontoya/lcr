@@ -3,6 +3,9 @@
 	<head>
 		{% block head %}
 		<link rel='stylesheet' href="{{ url_for('static', filename='css/style.css') }}" />
+		<script type='text/javascript' src="/static/js/lib/knockout-2.0.0.js"></script>
+		<script type='text/javascript' src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script type='text/javascript' src="/static/js/client-models.js"></script>
 		<title>{% block title %}{% endblock %} | Learning Content Repository</title>
 		{% endblock %}
 	</head>
