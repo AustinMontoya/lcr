@@ -1,4 +1,4 @@
-function LearningObject(data) {
+function LearningPackage(data) {
 
 	// Data
 	var self = this;

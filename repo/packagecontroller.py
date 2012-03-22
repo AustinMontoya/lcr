@@ -1,8 +1,8 @@
 import json
 import util
 import crud_helpers
-from crud_helpers import HelperException
-from crud_helpers import createJsonResponse
+from crud_helpers import HelperException, createJsonResponse
+from flask import make_response
 
 def create(request):
 	success = True
@@ -29,9 +29,9 @@ def create(request):
 			pass
 
 	if 'application/json' in request.headers['content-type']:
-		# create the content object
+		# create the package object
 		try:
-			result['id'] = crud_helpers.create_content(request.json)
+			result['id'] = crud_helpers.create_package(request.json)
 		except HelperException as e:
 			success = False
 			error = e.error
@@ -74,14 +74,15 @@ def retrieve(request, id):
 		status_code = 400
 	
 	try:
-		result = crud_helpers.retrieve_content(id)
+		result = crud_helpers.retrieve_package(id)
 	except HelperException as e:
 		success = False
 		error = e.error
 		status_code = e.status_code
 
 	if success is True:
-		response = createJsonResponse(result, status_code)
+		response = make_response(result, 200)
+		response.headers['content-type'] = 'application/json'
 	else:
 		result['error'] = error
 		response = createJsonResponse(result, status_code)
@@ -101,9 +102,9 @@ def update(request, id):
 		status_code = 400
 
 	if 'application/json' in request.headers['content-type']:
-		# create the content object
+		# create the package object
 		try:
-			crud_helpers.update_content(id, request.json)
+			crud_helpers.update_package(id, request.json)
 		except HelperException as e:
 			success = False
 			error = e.error
@@ -134,7 +135,7 @@ def delete(request, id):
 		status_code = 400
 
 	try:
-		crud_helpers.delete_content(id)
+		crud_helpers.delete_package(id)
 	except HelperException as e:
 		success = False
 		error = e.error

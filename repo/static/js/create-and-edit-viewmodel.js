@@ -7,46 +7,46 @@ function CreateAndEditViewModel() {
 
 	// Behaviors
 	self.addResource = function() {
-		self.learningObject.resources.push(new Resource({ type: "file" }))
+		self.learningPackage.resources.push(new Resource({ type: "file" }))
 	};
 	self.removeResource = function(resource) { 
 		if(resource.id())
 			self.resourceDeleteQueue.push(resource.id());
 
-		self.learningObject.resources.remove(resource);
+		self.learningPackage.resources.remove(resource);
 	}
 
 	self.saveContent = function() {
 		var onSuccess = function(data) {
 			if(self.mode() === "create") {
-				self.learningObject.id(data.id);
+				self.learningPackage.id(data.id);
 				self.mode("update");
 			}
-			self.showStatusBox("Learning Content package saved successfully.", 
+			self.showStatusBox("Learning Package saved successfully.", 
 						  		"success-container");
 		}
 
-		if(self.learningObject.validate()) {
-			var url = "/api/"+self.mode()+"/content";
+		if(self.learningPackage.validate()) {
+			var url = "/api/"+self.mode()+"/package";
 			if(self.mode() === "update")
-				url += "/"+self.learningObject.id();
+				url += "/"+self.learningPackage.id();
 
 			$.ajax(url, {
 				contentType: 'application/json',
 				type: "POST", 
 				processData: false,
-				data: JSON.stringify(self.learningObject.metadata()),
+				data: JSON.stringify(self.learningPackage.metadata()),
 				success: onSuccess
 			});
 		}
 	};
 
 	self.deleteContent = function(){
-		var confirmed = confirm("Are you sure you want to delete this Learning Content? "+
+		var confirmed = confirm("Are you sure you want to delete this Learning Package? "+
 								"All associated resources willl be deleted, and this action "+
 								"cannot be undone.");
 		if(confirmed) {
-			$.post("/api/delete/content/"+self.learningObject.id(), function(){
+			$.post("/api/delete/package/"+self.learningPackage.id(), function(){
 				window.location = '/';
 			});
 		}
@@ -70,16 +70,16 @@ function CreateAndEditViewModel() {
 	// Client-side routing
 	Sammy(function() {
 		this.get('/edit/:id', function() {
-			self.learningObject = new LearningObject();
-			$.get('/api/content/'+this.params['id'], function(data) {
+			self.learningPackage = new LearningPackage();
+			$.get('/api/package/'+this.params['id'], function(data) {
 				self.mode('update');
-				self.learningObject.load(data);
-				self.resources = self.learningObject.resources();
+				self.learningPackage.load(data);
+				self.resources = self.learningPackage.resources();
 			});
 		});
 		this.get('/create', function() {
-			self.learningObject = new LearningObject();
-			self.resources = self.learningObject.resources();
+			self.learningPackage = new LearningPackage();
+			self.resources = self.learningPackage.resources();
 		});
 	}).run();
 }

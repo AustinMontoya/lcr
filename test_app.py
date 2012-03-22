@@ -10,9 +10,9 @@ import json
 from flask import Flask
 from werkzeug.exceptions import NotFound
 from unittest import TestCase
-from repo import create_app, models
+from repo import create_app, mongo
 from settings import TestConfig
-from flaskext.mongoalchemy import MongoAlchemy
+import pymongo
 
 class BaseTestCase(TestCase):
 
@@ -37,6 +37,12 @@ class BaseAppTestCase(BaseTestCase):
         
         self.IdNotInDB = '4c271729e13823182f000000'
 
+        self.CreatePackageURL = '/api/create/package?multi=false&inline=false'
+        self.CreatePackageResourceURL = '/api/create/package/'
+        self.RetrievePackageURL = '/api/package/'
+        self.UpdatePackageURL = '/api/update/package/'
+        self.DeletePackageURL = '/api/delete/package/'
+
         self.testContent = {
             'title' : 'testTitle',
             'description' : 'Test description',
@@ -57,12 +63,12 @@ class BaseAppTestCase(BaseTestCase):
         }
 
     def teardown(self):
-        for lcr in models.LearningObject.query.all():
-            lcr.remove()
+        conn = pymongo.Connection(TestConfig.MONGO_HOST,TestConfig.MONGO_PORT)
+        conn[TestConfig.MONGO_DBNAME].drop_collection("learningObjects")
 
-    def test_content_create_success(self):
+    def test_package_create_success(self):
         print '\n1: '
-        response = self.app.post('/api/create/content', 
+        response = self.app.post(self.CreatePackageURL, 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)
@@ -71,11 +77,11 @@ class BaseAppTestCase(BaseTestCase):
         vals = json.loads(response.data)
         self.assertIn('id', vals)
 
-    def test_content_create_fail_bad_type(self):
+    def test_package_create_fail_bad_type(self):
         print '\n2: ' 
         bad_content = self.testContent
         bad_content['title'] = True
-        response = self.app.post('/api/create/content', 
+        response = self.app.post(self.CreatePackageURL, 
                         content_type='application/json',
                         data=json.dumps(bad_content),
                         follow_redirects=True)
@@ -83,20 +89,20 @@ class BaseAppTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         vals = json.loads(response.data)
         self.assertIn('error', vals)
-        self.assertIn("The object could not be created in the database. ", vals["error"])
+        self.assertIn("The metadata used to create the package object was not in the expected form.", vals["error"])
 
-    def test_content_create_fail_invalid_json(self):
-        raise NotImplementedError()
+    def test_package_create_fail_invalid_json(self):
+        raise NotImplementedError("TODO")
 
-    def test_content_create_fail_missing_metadata(self):
-        raise NotImplementedError()
+    def test_package_create_fail_missing_metadata(self):
+        raise NotImplementedError("TODO")
 
-    def test_content_create_fail_invalid_content_type(self):
-        raise NotImplementedError()
+    def test_package_create_fail_invalid_package_type(self):
+        raise NotImplementedError("TODO")
 
-    def test_content_retrieve_success(self):
+    def test_package_retrieve_success(self):
         print '\n3: '
-        response_post = self.app.post('/api/create/content', 
+        response_post = self.app.post(self.CreatePackageURL, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -105,13 +111,13 @@ class BaseAppTestCase(BaseTestCase):
         vals_post = json.loads(response_post.data)
         self.assertIn('id', vals_post)
 
-        response_get = self.app.get('/api/content/' + str(vals_post['id']))
+        response_get = self.app.get(self.RetrievePackageURL + str(vals_post['id']))
         print '\n get: ' + str(json.dumps(response_get.data)) + ' ' + str(response_get.status_code)
         self.assertEqual(response_get.status_code, 200)
 
-    def test_content_retrieve_success(self):
+    def test_package_retrieve_success(self):
         print '\n4: '      
-        response_post = self.app.post('/api/create/content', 
+        response_post = self.app.post(self.CreatePackageURL, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -119,21 +125,21 @@ class BaseAppTestCase(BaseTestCase):
         self.assertEqual(response_post.status_code, 200)
         vals_post = json.loads(response_post.data)
 
-        response_get = self.app.get('/api/content/' + str(vals_post['id']) + '?metadata=true')
+        response_get = self.app.get(self.RetrievePackageURL + str(vals_post['id']) + '?metadata=true')
         print '\n post: ' + str(json.dumps(response_get.data)) + ' ' + str(response_get.status_code)
         self.assertEqual(response_get.status_code, 200)
 
-    def test_content_retrieve_fail(self):
+    def test_package_retrieve_fail(self):
         print '\n5: '
-        response_get = self.app.get('/api/content/' + self.IdNotInDB)
+        response_get = self.app.get(self.RetrievePackageURL + self.IdNotInDB)
         print '\n get: ' + str(json.dumps(response_get.data)) + ' ' + str(response_get.status_code)
         self.assertGreaterEqual(response_get.status_code, 400)
         vals = json.loads(response_get.data)
         self.assertIn('error', vals)
 
-    def test_content_update_success(self):
+    def test_package_update_success(self):
         print '\n6: '
-        response_post = self.app.post('/api/create/content', 
+        response_post = self.app.post(self.CreatePackageURL, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -142,16 +148,16 @@ class BaseAppTestCase(BaseTestCase):
         vals_post = json.loads(response_post.data)
         self.assertIn('id', vals_post)
 
-        response_update_post = self.app.post('/api/update/content/' + str(vals_post['id']), 
+        response_update_post = self.app.post(self.UpdatePackageURL + str(vals_post['id']), 
                 content_type='application/json',
                 data=json.dumps(self.testContentUpdate),
                 follow_redirects=True)
         print '\n post: ' + str(json.dumps(response_update_post.data)) + ' ' + str(response_update_post.status_code)
         self.assertEqual(response_update_post.status_code, 200)
 
-    def test_content_update_fail(self):
+    def test_package_update_fail(self):
         print '\n7: '
-        response_post = self.app.post('/api/create/content', 
+        response_post = self.app.post(self.CreatePackageURL, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -160,7 +166,7 @@ class BaseAppTestCase(BaseTestCase):
         vals_post = json.loads(response_post.data)
         self.assertIn('id', vals_post)
 
-        response_update_post = self.app.post('/api/update/content/' + self.IdNotInDB, 
+        response_update_post = self.app.post(self.UpdatePackageURL + self.IdNotInDB, 
                 content_type='application/json',
                 data=json.dumps(self.testContentUpdate),
                 follow_redirects=True)
@@ -169,9 +175,9 @@ class BaseAppTestCase(BaseTestCase):
         vals = json.loads(response_update_post.data)
         self.assertIn('error', vals)
 
-    def test_content_delete_success(self):
+    def test_package_delete_success(self):
         print '\n8: '
-        response_post = self.app.post('/api/create/content', 
+        response_post = self.app.post(self.CreatePackageURL, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -180,25 +186,25 @@ class BaseAppTestCase(BaseTestCase):
         vals_post = json.loads(response_post.data)
         self.assertIn('id', vals_post)
 
-        response_delete_post = self.app.post('/api/delete/content/' + str(vals_post['id']), 
+        response_delete_post = self.app.post(self.DeletePackageURL + str(vals_post['id']), 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
         print '\n post: ' + str(json.dumps(response_delete_post.data)) + ' ' + str(response_delete_post.status_code)
         self.assertEqual(response_delete_post.status_code, 200)
 
-    def test_content_delete_fail(self):
+    def test_package_delete_fail(self):
         print '\n9: '
-        response_post = self.app.post('/api/create/content', 
+        response_post = self.app.post(self.CreatePackageURL, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
         print '\n post: ' + str(json.dumps(response_post.data)) + ' ' + str(response_post.status_code)
-        self.assertEqual(response_post.status_code, 200)
+        self.assertEqual(response_post.status_code, 400)
         vals_post = json.loads(response_post.data)
         self.assertIn('id', vals_post)
 
-        response_delete_post = self.app.post('/api/delete/content/' + self.IdNotInDB, 
+        response_delete_post = self.app.post(self.DeletePackageURL + self.IdNotInDB, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -209,7 +215,7 @@ class BaseAppTestCase(BaseTestCase):
 
     def test_resource_url_create_success(self):
         print '\n10: '
-        response = self.app.post('/api/create/content', 
+        response = self.app.post(self.CreatePackageURL, 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)
@@ -221,7 +227,7 @@ class BaseAppTestCase(BaseTestCase):
         new_resource = self.testResourceURL
         new_resource['id'] = vals['id']
 
-        response_resource = self.app.post('/api/create/resource/' + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
+        response_resource = self.app.post(self.CreatePackageResourceURL + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
                         content_type='application/json',
                         data=json.dumps(new_resource),
                         follow_redirects=True)
@@ -232,7 +238,7 @@ class BaseAppTestCase(BaseTestCase):
 
     def test_resource_url_create_fail(self):
         print '\n11: '
-        response = self.app.post('/api/create/content', 
+        response = self.app.post(self.CreatePackageURL, 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)
@@ -244,7 +250,7 @@ class BaseAppTestCase(BaseTestCase):
         new_resource = self.testResourceURL
         new_resource['id'] = self.IdNotInDB
 
-        response_resource = self.app.post('/api/create/resource/' + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
+        response_resource = self.app.post(self.CreatePackageResourceURL + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
                         content_type='application/json',
                         data=json.dumps(new_resource),
                         follow_redirects=True)
@@ -255,7 +261,7 @@ class BaseAppTestCase(BaseTestCase):
 
     def test_resource_url_retrieve_success(self):
         print '\n12: '
-        response = self.app.post('/api/create/content', 
+        response = self.app.post(self.CreatePackageURL, 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)
@@ -267,7 +273,7 @@ class BaseAppTestCase(BaseTestCase):
         new_resource = self.testResourceURL
         new_resource['id'] = vals['id']
 
-        response_resource = self.app.post('/api/create/resource/' + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
+        response_resource = self.app.post(self.CreatePackageResourceURL + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
                         content_type='application/json',
                         data=json.dumps(new_resource),
                         follow_redirects=True)
@@ -276,13 +282,13 @@ class BaseAppTestCase(BaseTestCase):
         vals = json.loads(response_resource.data)
         self.assertIn('id', vals)
 
-        response_get = self.app.get('/api/resource/' + str(vals['id']) + '?metadata=false')
+        response_get = self.app.get(self.RetrievePackageURL + str(vals['id']) + '?metadata=false')
         print '\n get: ' + str(json.dumps(response_get.data)) + ' ' + str(response_get.status_code)
         self.assertEqual(response_get.status_code, 200)
 
     def test_resource_url_retrieve_failure(self):
         print '\n13: '
-        response = self.app.post('/api/create/content', 
+        response = self.app.post(self.CreatePackageURL, 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)
@@ -294,7 +300,7 @@ class BaseAppTestCase(BaseTestCase):
         new_resource = self.testResourceURL
         new_resource['id'] = vals['id']
 
-        response_resource = self.app.post('/api/create/resource/' + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
+        response_resource = self.app.post(self.CreatePackageResourceURL + str(vals['id']) + '?type=' + str(new_resource['type']) + '&name=' + str(new_resource['name']), 
                         content_type='application/json',
                         data=json.dumps(new_resource),
                         follow_redirects=True)
@@ -303,7 +309,7 @@ class BaseAppTestCase(BaseTestCase):
         vals = json.loads(response_resource.data)
         self.assertIn('id', vals)
 
-        response_get = self.app.get('/api/resource/' + self.IdNotInDB + '?metadata=false')
+        response_get = self.app.get(self.RetrievePackageURL + self.IdNotInDB + '?metadata=false')
         print '\n get: ' + str(json.dumps(response_get.data)) + ' ' + str(response_get.status_code)
         self.assertGreaterEqual(response_get.status_code, 400)
         vals = json.loads(response_get.data)
