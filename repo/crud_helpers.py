@@ -1,10 +1,15 @@
-from flask import g
+from flask import make_response
 from repo import mongo
 from repo.models import Package, WebResource, FileResource
 from datetime import datetime
 import json
 from types import NoneType
 from bson.objectid import ObjectId, InvalidId
+
+def createJsonResponse(doc, status_code):
+    response = make_response(json.dumps(doc), status_code)
+    response.headers['content-type'] = "application/json"
+    return response
 
 class HelperException(Exception):
     """Internal class to manage error messages and status codes"""
@@ -65,6 +70,7 @@ def update_package(id, metadata):
 
 def delete_package(id):
     try:
-        mongo.db.packages.remove(id)
+        mongo.db.packages.remove(ObjectId(id))
     except Exception as e:
         raise HelperException("The object could not be removed from the database. " + str(e), 500)
+
