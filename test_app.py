@@ -89,7 +89,7 @@ class BaseAppTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         vals = json.loads(response.data)
         self.assertIn('error', vals)
-        self.assertIn("The object could not be created in the database. ", vals["error"])
+        self.assertIn("The metadata used to create the package object was not in the expected form.", vals["error"])
 
     def test_package_create_fail_invalid_json(self):
         raise NotImplementedError("TODO")
