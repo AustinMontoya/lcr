@@ -2,34 +2,28 @@
 {% block title %}Add Learning Content{% endblock %}
 {% block head %}
 	{{ super() }}
-	<style type='text/css'>
-		.create-resource dd {
-			margin: 0;
-		}
-	</style>
-	<script type='text/javascript' src="/static/js/lib/knockout-2.0.0.js"></script>
-	<script type='text/javascript' src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type='text/javascript' src="/static/js/lib/sammy-latest.min.js"></script>
 	<script type='text/javascript' src="/static/js/create-and-edit-viewmodel.js"></script>
 {% endblock %}
 {% block content %}
-	<h1>Edit Resource</h1>
+	<h1>Package Editor</h1>
 	<div id="statusBox" data-bind="text: notification">
 	</div>
  	<p>
  		Fill out the following fields:
  	</p>
  	<form id='CreateForm' class='lo-form-edit' action='#/post/form' method="POST">
- 		<ul class='error-container' data-bind="foreach: learningObject.errors, visible: learningObject.errors().length > 0">
+ 		<ul class='error-container' data-bind="foreach: learningPackage.errors, visible: learningPackage.errors().length > 0">
  			<li data-bind="text: $data" />
  		</ul>
- 		<p><label>*Title:</label><br/><input type="text" data-bind="value: learningObject.title"/></p>
- 		<p><label>Description:</label><br/><textarea data-bind="value: learningObject.description"></textarea></p>
- 		<p><label>Tags:</label><br/><input data-bind="value: learningObject.tags" /></p>
+ 		<p><label>*Title:</label><br/><input type="text" data-bind="value: learningPackage.title"/></p>
+ 		<p><label>Description:</label><br/><textarea data-bind="value: learningPackage.description"></textarea></p>
+ 		<p><label>Tags:</label><br/><input data-bind="value: learningPackage.tags" /></p>
  	</form>
  	<button data-bind="click: addResource">Add a resource</button>
- 	<button data-bind="click: saveContent, enable: learningObject.resources().length > 0">Save Learning Content</button>
- 	<table data-bind="visible: learningObject.resources().length > 0">
+ 	<button data-bind="click: saveContent, enable: learningPackage.resources().length > 0">Save Learning Content</button>
+ 	<button data-bind="click: deleteContent, enable: mode() == 'update', visible: mode() == 'update'">Delete</button>
+ 	<table data-bind="visible: learningPackage.resources().length > 0">
  		<thead>
  			<tr>
  				<th>Resource Type</th>
@@ -38,17 +32,17 @@
  				<th></th>
  			</tr>
  		</thead>
- 		<tbody data-bind="foreach: learningObject.resources">
+ 		<tbody data-bind="foreach: learningPackage.resources">
  			<tr>
  				<td><select data-bind="options: $root.resourceTypes, value: type"></select></td>
  				<td>
- 					<span data-bind="visible: type() == 'url' && id == null">
+ 					<span data-bind="visible: type() == 'url' && id() == undefined">
  						<label>Url:</label> <input type='text' data-bind="value: currentUrlValue" />
  					</span>
- 					<span data-bind="visible: type() == 'file' && id == null">
+ 					<span data-bind="visible: type() == 'file' && id() == undefined">
  						<label>File:</label> <input type='file' data-bind="value: currentFileValue" />
  					</span>
- 					<span data-bind="visible: id != null">
+ 					<span data-bind="visible: id() !== undefined">
  						<a data-bind="attr: { href: locator() }, text: locator"></a>
  					</span>
  				</td>
