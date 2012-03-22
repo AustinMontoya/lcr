@@ -29,7 +29,6 @@ class FileResource(Resource):
 # Containers
 ##
 
-@diff_id_field(ObjectIdField, ['id'])
 class Package(Document):
 	'''Holds general information about a collection of loosely organized
 	resources related to a given topic.'''
@@ -39,3 +38,6 @@ class Package(Document):
 	tags = ListField(StringField(max_length=30))
 	resources = ListField(EmbeddedDocumentField(Resource))
 	last_updated = DateTimeField(required=True)
+
+	class Meta:
+		id_field = ObjectIdField
