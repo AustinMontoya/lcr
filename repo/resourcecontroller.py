@@ -4,8 +4,6 @@ import crud_helpers
 from crud_helpers import HelperException
 from crud_helpers import createJsonResponse
 
-result = {}
-
 def create(request, id):
 	success = True
 	result = {}
@@ -74,6 +72,7 @@ def create(request, id):
 
 def retrieve(request, id, resource_number):
 	success = True
+	result = {}
 	error = ''
 
 	if request is None:
@@ -94,6 +93,7 @@ def retrieve(request, id, resource_number):
 
 def update(request, id, resource_number):
 	success = True
+	result = {}
 	error = ''
 
 	if request is None:
@@ -110,6 +110,7 @@ def update(request, id, resource_number):
 
 def delete(request, id, resource_number):
 	success = True
+	result = {}
 	error = ''
 
 	if request is None:
