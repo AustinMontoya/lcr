@@ -1,4 +1,4 @@
-function LearningPackage(data) {
+function LearningPackage(id) {
 
 	// Data
 	var self = this;
@@ -17,6 +17,8 @@ function LearningPackage(data) {
 		}
 	});
 
+	if(id && typeof id == "string")
+		self.load(id, afterLoad)
 	
 	// Behaviors
 	self.validate = function() {
@@ -36,7 +38,7 @@ function LearningPackage(data) {
 		return self.errors().length === 0 && !hasResourceErrors;
 	}
 
-	self.load = function(data) {
+	self.init = function(data) {
 		self.id(data.id);
 		self.title(data.title);
 		self.description(data.description);
@@ -48,8 +50,17 @@ function LearningPackage(data) {
 					self.resources.push(new Resource(item));
 				});
 			}
-		}	
+		}
 	}
+
+	self.load = function(id, callback) {
+		$.get('/api/package/'+id, function(data) {
+			self.init(data);
+			if(callback)
+				callback(data);
+		});
+	}
+
 }
 
 function Resource(data) {

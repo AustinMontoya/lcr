@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}View Learning Content{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block content %}
+	<h1 data-bind="text: title"></h1>
+ 	<h3>Description:</h3>
+ 	<p data-bind="text: description">
+ 		<span data-bind="visible: description != ''">No description provided.</span>
+ 	</p>
+ 	<h3>Tags:</h3>
+ 	<ul data-bind="foreach: tags().split(',')">
+ 		<li><a href='#' data-bind="text: $data"></a></li>
+ 	</ul>
+ 	<h3>Resources:</h3>
+ 	<table>
+ 		<tbody>
+ 			<tr data-bind="foreach: resources">
+ 				<td data-bind="text: name" />
+ 				<td><a data-bind="attributes : { href : locator }">link</a></td>
+ 			</tr>
+ 		</tbody>
+ 	</table>
+ 	<script type="text/javascript">
+ 		pkg = new LearningPackage();
+ 		pkg.init(
+ 			{% autoescape false %}{{ packageData }}{% endautoescape %}
+ 		);
+ 		ko.applyBindings(pkg);
+ 	</script>
+{% endblock %}
