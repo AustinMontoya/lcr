@@ -71,9 +71,8 @@ function CreateAndEditViewModel() {
 	Sammy(function() {
 		this.get('/edit/:id', function() {
 			self.learningPackage = new LearningPackage();
-			$.get('/api/package/'+this.params['id'], function(data) {
+			self.learningPackage.load(this.params['id'], function(data) {
 				self.mode('update');
-				self.learningPackage.load(data);
 				self.resources = self.learningPackage.resources();
 			});
 		});
