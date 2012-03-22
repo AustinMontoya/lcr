@@ -1,9 +1,8 @@
-from flask import make_response
-from flask import render_template
 import json
 import util
 import crud_helpers
 from crud_helpers import HelperException
+from crud_helpers import createJsonResponse
 
 def create(request):
 	success = True
@@ -11,18 +10,15 @@ def create(request):
 	error = ''
 	status_code = 200
 
-	if request is None:
-		success = False
-		error = "Bad request.  Somehow the request wasn't found."
-		status_code = 400
-
 	# handle multi and inline parameters in request
 	multi = util.str2bool(request.args.get('multi'))
 	inline = util.str2bool(request.args.get('inline'))
 
+	print multi
+
 	# handle multiple documents
 	if multi is True:
-		# TODO
+		raise NotImplementedError()
 
 		if type(request.json) is not list:
 			# check to see if it is a single document (i.e., dict)
@@ -119,7 +115,7 @@ def update(request, id):
 		status_code = 400		
 
 	if success is True:
-		response = make_response(None, status_code)
+		response = createJsonResponse(None, status_code)
 	else:
 		result['error'] = error
 		response = createJsonResponse(result, status_code)
@@ -146,14 +142,9 @@ def delete(request, id):
 		status_code = e.status_code
 
 	if success is True:
-		response = make_response(None, status_code)
+		response = createJsonResponse(None, status_code)
 	else:
 		result['error'] = error
 		response = createJsonResponse(result, status_code)
 
-	return response
-
-def createJsonResponse(doc, status_code):
-	response = make_response(json.dumps(doc), status_code)
-	response.headers['content-type'] = "application/json"
 	return response

@@ -1,9 +1,7 @@
 from flask import Blueprint, current_app, request, make_response, url_for, render_template
 import resourcecontroller
 import packagecontroller
-
 api = Blueprint('api', __name__, url_prefix='/api')
-
 # Content CRUD routes ---------------------------------
 # Create (supports optional inline and multi parameters)
 @api.route('/create/package', methods=['POST'])
