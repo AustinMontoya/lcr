@@ -200,7 +200,7 @@ class BaseAppTestCase(BaseTestCase):
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
         print '\n post: ' + str(json.dumps(response_post.data)) + ' ' + str(response_post.status_code)
-        self.assertEqual(response_post.status_code, 200)
+        self.assertEqual(response_post.status_code, 400)
         vals_post = json.loads(response_post.data)
         self.assertIn('id', vals_post)
 
