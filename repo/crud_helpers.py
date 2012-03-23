@@ -31,9 +31,9 @@ def save_package(metadata, id=None):
     package = {}
     if id is not None:
         existing_package = retrieve_package(id).to_python()
-        for k,v in metadata:
+        for k in metadata:
             try:
-                existing_package[k] = v
+                existing_package[k] = metadata[k]
             except:
                 continue
         package = Package(**existing_package)
@@ -95,7 +95,7 @@ def retrieve_json_package(id):
     if pkg['files'] is None:
         pkg['files'] = []
 
-    pkg['resources'] = pkg['files']+ pkg['urls']
+    pkg['resources'] = pkg['files'] + pkg['urls']
     del pkg['files']
     del pkg['urls']
 
