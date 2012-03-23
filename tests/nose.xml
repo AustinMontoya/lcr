@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite name="nosetests" tests="20" errors="8" failures="5" skip="0"><testcase classname="tests.test_create_package_resource_tests.Create_Package_Resource_Tests" name="test_resource_url_create_fail" time="0.047"><error type="exceptions.ValueError" message="No JSON object could be decoded&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;11: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000000\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_create_package_resource_tests.py", line 49, in test_resource_url_create_fail
+    vals = json.loads(response_resource.data)
+  File "C:\Python27\Lib\json\__init__.py", line 326, in loads
+    return _default_decoder.decode(s)
+  File "C:\Python27\Lib\json\decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Python27\Lib\json\decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+ValueError: No JSON object could be decoded
+-------------------- >> begin captured stdout << ---------------------
+
+11: 
+False
+
+"{\"id\": \"4f6ca065fd1f5e1ee8000000\"}" 200
+
+"<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
+
+--------------------- >> end captured stdout << ----------------------
+]]></error></testcase><testcase classname="tests.test_create_package_resource_tests.Create_Package_Resource_Tests" name="test_resource_url_create_success" time="0.009"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;10: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000001\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_create_package_resource_tests.py", line 25, in test_resource_url_create_success
+    self.assertEqual(response_resource.status_code, 200)
+  File "C:\Python27\Lib\unittest\case.py", line 509, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Python27\Lib\unittest\case.py", line 502, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: 404 != 200
+-------------------- >> begin captured stdout << ---------------------
+
+10: 
+False
+
+"{\"id\": \"4f6ca065fd1f5e1ee8000001\"}" 200
+
+"<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
+
+--------------------- >> end captured stdout << ----------------------
+]]></failure></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_bad_type" time="0.004" /><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_invalid_json" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_create_package_tests.py", line 32, in test_package_create_fail_invalid_json
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_invalid_package_type" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_create_package_tests.py", line 38, in test_package_create_fail_invalid_package_type
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_missing_metadata" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_create_package_tests.py", line 35, in test_package_create_fail_missing_metadata
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_success" time="0.004" /><testcase classname="tests.test_delete_package_resource_tests.Delete_Package_Resource_Tests" name="test_resource_url_delete_fail" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;17: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_delete_package_resource_tests.py", line 12, in test_resource_url_delete_fail
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+-------------------- >> begin captured stdout << ---------------------
+
+17: 
+
+--------------------- >> end captured stdout << ----------------------
+]]></error></testcase><testcase classname="tests.test_delete_package_resource_tests.Delete_Package_Resource_Tests" name="test_resource_url_delete_success" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;16: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_delete_package_resource_tests.py", line 8, in test_resource_url_delete_success
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+-------------------- >> begin captured stdout << ---------------------
+
+16: 
+
+--------------------- >> end captured stdout << ----------------------
+]]></error></testcase><testcase classname="tests.test_delete_package_tests.Delete_Package_Tests" name="test_package_delete_fail" time="0.002"><failure type="exceptions.AssertionError" message='200 != 400&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;9: &#10;False&#10;&#10; post: "{\"id\": \"4f6ca065fd1f5e1ee8000003\"}" 200&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------'><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_delete_package_tests.py", line 31, in test_package_delete_fail
+    self.assertEqual(response_post.status_code, 400)
+  File "C:\Python27\Lib\unittest\case.py", line 509, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Python27\Lib\unittest\case.py", line 502, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: 200 != 400
+-------------------- >> begin captured stdout << ---------------------
+
+9: 
+False
+
+ post: "{\"id\": \"4f6ca065fd1f5e1ee8000003\"}" 200
+
+--------------------- >> end captured stdout << ----------------------
+]]></failure></testcase><testcase classname="tests.test_delete_package_tests.Delete_Package_Tests" name="test_package_delete_success" time="0.004" /><testcase classname="tests.test_retrieve_package_resource_tests.Retrieve_Package_Resource_Tests" name="test_resource_url_retrieve_failure" time="0.009"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;13: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000005\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_retrieve_package_resource_tests.py", line 52, in test_resource_url_retrieve_failure
+    self.assertEqual(response_resource.status_code, 200)
+  File "C:\Python27\Lib\unittest\case.py", line 509, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Python27\Lib\unittest\case.py", line 502, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: 404 != 200
+-------------------- >> begin captured stdout << ---------------------
+
+13: 
+False
+
+"{\"id\": \"4f6ca065fd1f5e1ee8000005\"}" 200
+
+"<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
+
+--------------------- >> end captured stdout << ----------------------
+]]></failure></testcase><testcase classname="tests.test_retrieve_package_resource_tests.Retrieve_Package_Resource_Tests" name="test_resource_url_retrieve_success" time="0.008"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;12: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000006\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_retrieve_package_resource_tests.py", line 25, in test_resource_url_retrieve_success
+    self.assertEqual(response_resource.status_code, 200)
+  File "C:\Python27\Lib\unittest\case.py", line 509, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Python27\Lib\unittest\case.py", line 502, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: 404 != 200
+-------------------- >> begin captured stdout << ---------------------
+
+12: 
+False
+
+"{\"id\": \"4f6ca065fd1f5e1ee8000006\"}" 200
+
+"<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
+
+--------------------- >> end captured stdout << ----------------------
+]]></failure></testcase><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_fail" time="0.004" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_metadata_success" time="0.005" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_success" time="0.005" /><testcase classname="tests.test_update_package_resource_tests.Update_Package_Resource_Tests" name="test_resource_url_update_fail" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;15: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_update_package_resource_tests.py", line 12, in test_resource_url_update_fail
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+-------------------- >> begin captured stdout << ---------------------
+
+15: 
+
+--------------------- >> end captured stdout << ----------------------
+]]></error></testcase><testcase classname="tests.test_update_package_resource_tests.Update_Package_Resource_Tests" name="test_resource_url_update_success" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;14: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_update_package_resource_tests.py", line 8, in test_resource_url_update_success
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+-------------------- >> begin captured stdout << ---------------------
+
+14: 
+
+--------------------- >> end captured stdout << ----------------------
+]]></error></testcase><testcase classname="tests.test_update_package_tests.Update_Package_Tests" name="test_package_update_fail" time="0.006"><failure type="exceptions.AssertionError" message='200 not greater than or equal to 400&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;7: &#10;False&#10;&#10; post: "{\"id\": \"4f6ca065fd1f5e1ee8000009\"}" 200&#10;&#10; post: "null" 200&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------'><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_update_package_tests.py", line 40, in test_package_update_fail
+    self.assertGreaterEqual(response_update_post.status_code, 400)
+  File "C:\Python27\Lib\unittest\case.py", line 944, in assertGreaterEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+  File "C:\Python27\Lib\unittest\case.py", line 408, in fail
+    raise self.failureException(msg)
+AssertionError: 200 not greater than or equal to 400
+-------------------- >> begin captured stdout << ---------------------
+
+7: 
+False
+
+ post: "{\"id\": \"4f6ca065fd1f5e1ee8000009\"}" 200
+
+ post: "null" 200
+
+--------------------- >> end captured stdout << ----------------------
+]]></failure></testcase><testcase classname="tests.test_update_package_tests.Update_Package_Tests" name="test_package_update_success" time="0.005" /></testsuite>
