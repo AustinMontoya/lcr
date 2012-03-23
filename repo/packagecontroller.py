@@ -74,7 +74,7 @@ def retrieve(request, id):
 		status_code = 400
 	
 	try:
-		result = crud_helpers.retrieve_package(id)
+		result = crud_helpers.retrieve_json_package(id)
 	except HelperException as e:
 		success = False
 		error = e.error
