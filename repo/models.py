@@ -18,6 +18,7 @@ class Resource(EmbeddedDocument):
 	last_updated = DateTimeField(required=True)
 
 class WebResource(Resource):
+	_public_fields = ['url']
 	url = URLField(required=True)
 
 class FileResource(Resource):
@@ -32,7 +33,6 @@ class FileResource(Resource):
 class Package(Document):
 	'''Holds general information about a collection of loosely organized
 	resources related to a given topic.'''
-	_public_fields=['id', 'title', 'description', 'tags', 'resources', 'last_updated']
 	title = StringField(min_length=1, max_length=50, required=True)
 	description = StringField(max_length=140)
 	tags = ListField(StringField(max_length=30))
