@@ -28,11 +28,17 @@ class HelperException(Exception):
 
 def save_package(metadata, id=None):
     metadata['last_updated'] = datetime.now()
-
+    package = {}
     if id is not None:
-        metadata['_id'] = id
-
-    package = Package(**metadata)
+        existing_package = retrieve_package(id).to_python()
+        for k,v in metadata:
+            try:
+                existing_package[k] = v
+            except:
+                continue
+        package = Package(**existing_package)
+    else:
+        package = Package(**metadata)
 
     # parse the metadata
     try:        
@@ -70,16 +76,30 @@ def create_url_resource(package_id, metadata, resource_name):
 
     # add the resource to the package
     try:
-        package.resources.append(resource)
+        package.urls.append(resource)
         pckg = package.to_python()
         pckg['_id'] = ObjectId(package_id)
-        print pckg
         mongo.db.packages.save(pckg)
     except Exception as e:
         raise HelperException("The resource could not be added to the package." + str(e), 500)
 
 def retrieve_json_package(id):
-    return Package.make_json_publicsafe(retrieve_package(id))
+    pkg = json.loads(Package.make_json_publicsafe(retrieve_package(id)))
+
+    for item in pkg['files']:
+        item['type'] = 'file'
+
+    for item in pkg['urls']:
+        item['type'] = 'url'
+
+    if pkg['files'] is None:
+        pkg['files'] = []
+
+    pkg['resources'] = pkg['files']+ pkg['urls']
+    del pkg['files']
+    del pkg['urls']
+
+    return json.dumps(pkg)
 
 def retrieve_package(id):
     obj_id = None
@@ -104,4 +124,3 @@ def delete_package(id):
         mongo.db.packages.remove(ObjectId(id))
     except Exception as e:
         raise HelperException("The object could not be removed from the database. " + str(e), 500)
-
