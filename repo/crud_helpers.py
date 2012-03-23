@@ -11,6 +11,12 @@ def createJsonResponse(doc, status_code):
     response.headers['content-type'] = "application/json"
     return response
 
+def createErrorResponse(error, status_code):
+    result = {}
+    result['error'] = error
+    response = createJsonResponse(result, status_code)
+    return response
+
 class HelperException(Exception):
     """Internal class to manage error messages and status codes"""
     status_code = ''
