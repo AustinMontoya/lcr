@@ -37,7 +37,10 @@ class BaseAppTestCase(BaseTestCase):
         
         self.IdNotInDB = '4c271729e13823182f000000'
 
-        self.CreatePackageURL = '/api/create/package?multi=false&inline=false'
+        self.CreatePackageURLFF = '/api/create/package?multi=false&inline=false'
+        self.CreatePackageURLFT = '/api/create/package?multi=false&inline=true'
+        self.CreatePackageURLTF = '/api/create/package?multi=true&inline=false'
+        self.CreatePackageURLTT = '/api/create/package?multi=true&inline=true'
         self.CreatePackageResourceURL = '/api/create/package/'
         self.RetrievePackageURL = '/api/package/'
         self.UpdatePackageURL = '/api/update/package/'
