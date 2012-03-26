@@ -30,16 +30,16 @@ def CreateResource(id):
 	return resourcecontroller.create(request, id) 
 
 # Retrieve
-@api.route('/package/<id>/resource/<int:resource_number>', methods=['GET'])
-def RetrieveResource(id, resource_number):
-	return resourcecontroller.retrieve(request, id, resource_number) 
+@api.route('/package/<id>/resource/<resource_name>', methods=['GET'])
+def RetrieveResource(id, resource_name):
+	return resourcecontroller.retrieve(request, id, resource_name) 
 
 # Update (supports metadata parameter)
-@api.route('/update/package/<id>/resource/<int:resource_number>', methods=['POST'])
+@api.route('/update/package/<id>/resource/<resource_name>', methods=['POST'])
 def UpdateResource(id):
-	return resourcecontroller.update(request, id, resource_number) 
+	return resourcecontroller.update(request, id, resource_name) 
 
 # Delete
-@api.route('/delete/package/<id>/resource/<int:resource_number>', methods=['POST'])
+@api.route('/delete/package/<id>/resource/<resource_name>', methods=['POST'])
 def DeleteResource(id):
-	return resourcecontroller.content(request, id, resource_number)
+	return resourcecontroller.content(request, id, resource_name)
