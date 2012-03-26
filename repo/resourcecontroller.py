@@ -1,8 +1,10 @@
+from flask import make_response
 import json
 import util
 import crud_helpers
 from crud_helpers import HelperException
 from crud_helpers import createJsonResponse
+from crud_helpers import createErrorResponse
 
 def create(request, id):
 	success = True
@@ -70,26 +72,41 @@ def create(request, id):
 	
 	return response
 
-def retrieve(request, id, resource_number):
-	success = True
-	result = {}
-	error = ''
+def retrieve(request, id, resource_name):
+    result = {}
+    error = ''
 
-	if request is None:
-		success = False
-		error = "Request data was not found."
+    if request is None:
+        return crud_helpers.createErrorResponse("Request data was not found.", 400)
 
-	# handle metadata parameter
+    # retrieve the package
+    try:
+        package_str = crud_helpers.retrieve_json_package(id)
+        package = json.loads(package_str)
+    except Exception as e:
+        return crud_helpers.createErrorResponse(e.error, e.status_code)
 
-	result['document'] = json.dumps({'filename':'value','description':'value2'})
+    # get the resource
+    try:
+        for item in package['resources']:
+            if item['name'] == resource_name:
+                resource = item
+                break
+    except Exception as e:
+        return crud_helpers.createErrorResponse("An error occured while attempting to get the specified resource. " + str(e), 500)
 
-	if success is True:
-		result['success'] = True
-	else:
-		result['success'] = False
-		result['error'] = error
+	# determine the resource type
+    if resource['type'] == 'url':
+        # make the response and set content type
+        result['url'] = resource['url']
+        try:
+            response = make_response(json.dumps(result), 200)
+        except Exception as e:
+            return crud_helpers.createErrorResponse("An error occured while attempting to get the URL of the resource. " + str(e), 500)
 
-	return json.dumps(result)
+    	response.headers['content-type'] = "application/json"
+    	return response
+
 
 def update(request, id, resource_number):
 	success = True

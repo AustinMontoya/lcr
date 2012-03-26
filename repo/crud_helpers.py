@@ -78,7 +78,7 @@ def create_url_resource(package_id, metadata, resource_name):
     try:
         resource.validate()
     except Exception as e:
-        raise HelperException("The metadata used to create the resource was not in the expceted form. " + str(e), 400)
+        raise HelperException("The metadata used to create the resource was not in the expected form. " + str(e), 400)
 
     # add the resource to the package
     try:
