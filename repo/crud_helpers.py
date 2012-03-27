@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 from types import NoneType
 from bson.objectid import ObjectId, InvalidId
+import jinja2
 
 def createJsonResponse(doc, status_code):
     response = make_response(json.dumps(doc), status_code)
@@ -131,7 +132,23 @@ def delete_package(id):
 # saves it directly from a model to mongodb.
 # takes care of the id mapping problem in dictshield
 def _save_from_model(model):
-    package_dict = model.to_python()
+
+    # Escapes any html markup using Jinja2.
+    # We don't want to send potential xss attacks
+    # to API consumers.
+    def sanitize(obj):
+        if isinstance(obj, dict):
+            for key in obj:
+                obj[key] = sanitize(obj[key])
+        elif isinstance(obj, list) and len(obj) > 0:
+            obj = map(lambda x : sanitize(x), obj)
+        else:
+            types_to_escape = [str, unicode]
+            if type(obj) in types_to_escape:
+                obj = jinja2.Markup.escape(obj)
+        return obj
+            
+    package_dict = sanitize(model.to_python())
 
     if 'id' in package_dict:
         id = ObjectId(package_dict['id'])
