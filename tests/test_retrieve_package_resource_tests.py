@@ -5,7 +5,7 @@ class Retrieve_Package_Resource_Tests(BaseAppTestCase):
 
     def test_resource_url_retrieve_success(self):
         print '\n12: '
-        response = self.app.post(self.CreatePackageURL, 
+        response = self.app.post(self.CreatePackageURLFF, 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)
@@ -32,7 +32,7 @@ class Retrieve_Package_Resource_Tests(BaseAppTestCase):
 
     def test_resource_url_retrieve_failure(self):
         print '\n13: '
-        response = self.app.post(self.CreatePackageURL, 
+        response = self.app.post(self.CreatePackageURLFF, 
                         content_type='application/json',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)

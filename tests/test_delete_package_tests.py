@@ -5,7 +5,7 @@ class Delete_Package_Tests(BaseAppTestCase):
     
     def test_package_delete_success(self):
         print '\n8: '
-        response_post = self.app.post(self.CreatePackageURL, 
+        response_post = self.app.post(self.CreatePackageURLFF, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -23,7 +23,7 @@ class Delete_Package_Tests(BaseAppTestCase):
 
     def test_package_delete_fail(self):
         print '\n9: '
-        response_post = self.app.post(self.CreatePackageURL, 
+        response_post = self.app.post(self.CreatePackageURLFF, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)

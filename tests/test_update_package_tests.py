@@ -5,7 +5,7 @@ class Update_Package_Tests(BaseAppTestCase):
 
     def test_package_update_success(self):
         print '\n6: '
-        response_post = self.app.post(self.CreatePackageURL, 
+        response_post = self.app.post(self.CreatePackageURLFF, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -23,7 +23,7 @@ class Update_Package_Tests(BaseAppTestCase):
 
     def test_package_update_fail(self):
         print '\n7: '
-        response_post = self.app.post(self.CreatePackageURL, 
+        response_post = self.app.post(self.CreatePackageURLFF, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
