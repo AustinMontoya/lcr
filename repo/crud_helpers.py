@@ -69,6 +69,11 @@ def create_url_resource(package_id, metadata, resource_name):
     # get the package
     package = retrieve_package(package_id)
 
+    # check to see if the resource name already exists
+    for item in package.urls:
+        if item['name'].lower() == resource_name.lower():
+            raise HelperException("The resource name already exists in the specified package.", 400)
+
     metadata['last_updated'] = datetime.now()
     metadata['name'] = resource_name
 
