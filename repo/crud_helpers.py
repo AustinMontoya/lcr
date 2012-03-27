@@ -54,7 +54,7 @@ def save_package(metadata, id=None):
 
     # create the package object
     try:
-        return mongo.db.packages.save(package.to_python())
+        return _save_from_model(package)
     except Exception as e:
         raise HelperException("The learning package could not be saved. " + str(e), 500)
 
@@ -69,16 +69,10 @@ def create_url_resource(package_id, metadata, resource_name):
     # get the package
     package = retrieve_package(package_id)
 
-    # check to see if the resource name already exists
-    for item in package.urls:
-        if item['name'].lower() == resource_name.lower():
-            raise HelperException("The resource name already exists in the specified package.", 400)
-
-    metadata['last_updated'] = datetime.now()
-    metadata['name'] = resource_name
-
     # create the resource
     resource = WebResource(**metadata)
+    resource.last_updated = datetime.now()
+    resource.name = resource_name
 
     try:
         resource.validate()
@@ -88,9 +82,7 @@ def create_url_resource(package_id, metadata, resource_name):
     # add the resource to the package
     try:
         package.urls.append(resource)
-        pckg = package.to_python()
-        pckg['_id'] = ObjectId(package_id)
-        mongo.db.packages.save(pckg)
+        _save_from_model(package)
     except Exception as e:
         raise HelperException("The resource could not be added to the package." + str(e), 500)
 
@@ -135,3 +127,15 @@ def delete_package(id):
         mongo.db.packages.remove(ObjectId(id))
     except Exception as e:
         raise HelperException("The object could not be removed from the database. " + str(e), 500)
+
+# saves it directly from a model to mongodb.
+# takes care of the id mapping problem in dictshield
+def _save_from_model(model):
+    package_dict = model.to_python()
+
+    if 'id' in package_dict:
+        id = ObjectId(package_dict['id'])
+        del package_dict['id']
+        package_dict['_id'] = ObjectId(id)
+
+    return mongo.db.packages.save(package_dict)
