@@ -49,7 +49,7 @@ class Create_Package_Tests(BaseAppTestCase):
     def test_package_create_invaild_type_fail(self):
         bad_content = self.testContent
         bad_content['title'] = True
-        response = self.app.post(self.CreatePackageURL, 
+        response = self.app.post(self.CreatePackageURLFF, 
                         content_type='application/json',
                         data=json.dumps(bad_content),
                         follow_redirects=True)
@@ -60,7 +60,7 @@ class Create_Package_Tests(BaseAppTestCase):
         self.assertIn("The metadata used to create the package object was not in the expected form.", vals["error"])
 
     def test_package_create_invalid_json_fail(self):
-        response = self.app.post(self.CreatePackageURL, 
+        response = self.app.post(self.CreatePackageURLFF, 
                         content_type='application/json',
                         data=json.dumps(self.testContent) + '1',
                         follow_redirects=True)
@@ -72,7 +72,7 @@ class Create_Package_Tests(BaseAppTestCase):
         raise NotImplementedError("TODO")
 
     def test_package_create_invalid_content_type_fail(self):
-        response = self.app.post(self.CreatePackageURL, 
+        response = self.app.post(self.CreatePackageURLFF, 
                         content_type='text/html',
                         data=json.dumps(self.testContent),
                         follow_redirects=True)

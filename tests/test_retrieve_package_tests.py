@@ -5,7 +5,7 @@ class Retrieve_Package_Tests(BaseAppTestCase):
 
     def test_package_retrieve_success(self):
         print '\n3: '
-        response_post = self.app.post(self.CreatePackageURL, 
+        response_post = self.app.post(self.CreatePackageURLFF, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)
@@ -20,7 +20,7 @@ class Retrieve_Package_Tests(BaseAppTestCase):
 
     def test_package_retrieve_metadata_success(self):
         print '\n4: '      
-        response_post = self.app.post(self.CreatePackageURL, 
+        response_post = self.app.post(self.CreatePackageURLFF, 
                 content_type='application/json',
                 data=json.dumps(self.testContent),
                 follow_redirects=True)

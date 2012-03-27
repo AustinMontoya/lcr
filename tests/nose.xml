@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite name="nosetests" tests="20" errors="8" failures="5" skip="0"><testcase classname="tests.test_create_package_resource_tests.Create_Package_Resource_Tests" name="test_resource_url_create_fail" time="0.047"><error type="exceptions.ValueError" message="No JSON object could be decoded&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;11: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000000\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+<?xml version="1.0" encoding="UTF-8"?><testsuite name="nosetests" tests="25" errors="10" failures="4" skip="0"><testcase classname="tests.test_create_package_resource_tests.Create_Package_Resource_Tests" name="test_resource_url_create_fail" time="0.052"><error type="exceptions.ValueError" message="No JSON object could be decoded&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;11: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f71ba04fd1f5e1a6c000000\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
   File "C:\dev\lcr\tests\test_create_package_resource_tests.py", line 49, in test_resource_url_create_fail
@@ -15,12 +15,12 @@ ValueError: No JSON object could be decoded
 11: 
 False
 
-"{\"id\": \"4f6ca065fd1f5e1ee8000000\"}" 200
+"{\"id\": \"4f71ba04fd1f5e1a6c000000\"}" 200
 
 "<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
 
 --------------------- >> end captured stdout << ----------------------
-]]></error></testcase><testcase classname="tests.test_create_package_resource_tests.Create_Package_Resource_Tests" name="test_resource_url_create_success" time="0.009"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;10: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000001\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+]]></error></testcase><testcase classname="tests.test_create_package_resource_tests.Create_Package_Resource_Tests" name="test_resource_url_create_success" time="0.010"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;10: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f71ba04fd1f5e1a6c000001\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
   File "C:\dev\lcr\tests\test_create_package_resource_tests.py", line 25, in test_resource_url_create_success
@@ -35,30 +35,36 @@ AssertionError: 404 != 200
 10: 
 False
 
-"{\"id\": \"4f6ca065fd1f5e1ee8000001\"}" 200
+"{\"id\": \"4f71ba04fd1f5e1a6c000001\"}" 200
 
 "<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
 
 --------------------- >> end captured stdout << ----------------------
-]]></failure></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_bad_type" time="0.004" /><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_invalid_json" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
+]]></failure></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_invaild_type_fail" time="0.004" /><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_invalid_content_type_fail" time="0.004" /><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_invalid_json_fail" time="0.004" /><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_missing_metadata_fail" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
-  File "C:\dev\lcr\tests\test_create_package_tests.py", line 32, in test_package_create_fail_invalid_json
+  File "C:\dev\lcr\tests\test_create_package_tests.py", line 72, in test_package_create_missing_metadata_fail
     raise NotImplementedError("TODO")
 NotImplementedError: TODO
-]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_invalid_package_type" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
+]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_multi_f_inline_f_success" time="0.004" /><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_multi_f_inline_t_success" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
-  File "C:\dev\lcr\tests\test_create_package_tests.py", line 38, in test_package_create_fail_invalid_package_type
+  File "C:\dev\lcr\tests\test_create_package_tests.py", line 25, in test_package_create_multi_f_inline_t_success
     raise NotImplementedError("TODO")
 NotImplementedError: TODO
-]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_fail_missing_metadata" time="0.002"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
+]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_multi_t_inline_f_success" time="0.001"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
-  File "C:\dev\lcr\tests\test_create_package_tests.py", line 35, in test_package_create_fail_missing_metadata
+  File "C:\dev\lcr\tests\test_create_package_tests.py", line 36, in test_package_create_multi_t_inline_f_success
     raise NotImplementedError("TODO")
 NotImplementedError: TODO
-]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_success" time="0.004" /><testcase classname="tests.test_delete_package_resource_tests.Delete_Package_Resource_Tests" name="test_resource_url_delete_fail" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;17: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+]]></error></testcase><testcase classname="tests.test_create_package_tests.Create_Package_Tests" name="test_package_create_multi_t_inline_t_success" time="0.001"><error type="exceptions.NotImplementedError" message="TODO"><![CDATA[Traceback (most recent call last):
+  File "C:\Python27\Lib\unittest\case.py", line 327, in run
+    testMethod()
+  File "C:\dev\lcr\tests\test_create_package_tests.py", line 47, in test_package_create_multi_t_inline_t_success
+    raise NotImplementedError("TODO")
+NotImplementedError: TODO
+]]></error></testcase><testcase classname="tests.test_delete_package_resource_tests.Delete_Package_Resource_Tests" name="test_resource_url_delete_fail" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;17: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
   File "C:\dev\lcr\tests\test_delete_package_resource_tests.py", line 12, in test_resource_url_delete_fail
@@ -80,7 +86,7 @@ NotImplementedError: TODO
 16: 
 
 --------------------- >> end captured stdout << ----------------------
-]]></error></testcase><testcase classname="tests.test_delete_package_tests.Delete_Package_Tests" name="test_package_delete_fail" time="0.002"><failure type="exceptions.AssertionError" message='200 != 400&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;9: &#10;False&#10;&#10; post: "{\"id\": \"4f6ca065fd1f5e1ee8000003\"}" 200&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------'><![CDATA[Traceback (most recent call last):
+]]></error></testcase><testcase classname="tests.test_delete_package_tests.Delete_Package_Tests" name="test_package_delete_fail" time="0.003"><failure type="exceptions.AssertionError" message='200 != 400&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;9: &#10;False&#10;&#10; post: "{\"id\": \"4f71ba04fd1f5e1a6c000003\"}" 200&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------'><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
   File "C:\dev\lcr\tests\test_delete_package_tests.py", line 31, in test_package_delete_fail
@@ -95,10 +101,10 @@ AssertionError: 200 != 400
 9: 
 False
 
- post: "{\"id\": \"4f6ca065fd1f5e1ee8000003\"}" 200
+ post: "{\"id\": \"4f71ba04fd1f5e1a6c000003\"}" 200
 
 --------------------- >> end captured stdout << ----------------------
-]]></failure></testcase><testcase classname="tests.test_delete_package_tests.Delete_Package_Tests" name="test_package_delete_success" time="0.004" /><testcase classname="tests.test_retrieve_package_resource_tests.Retrieve_Package_Resource_Tests" name="test_resource_url_retrieve_failure" time="0.009"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;13: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000005\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+]]></failure></testcase><testcase classname="tests.test_delete_package_tests.Delete_Package_Tests" name="test_package_delete_success" time="0.004" /><testcase classname="tests.test_retrieve_package_resource_tests.Retrieve_Package_Resource_Tests" name="test_resource_url_retrieve_failure" time="0.009"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;13: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f71ba04fd1f5e1a6c000005\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
   File "C:\dev\lcr\tests\test_retrieve_package_resource_tests.py", line 52, in test_resource_url_retrieve_failure
@@ -113,12 +119,12 @@ AssertionError: 404 != 200
 13: 
 False
 
-"{\"id\": \"4f6ca065fd1f5e1ee8000005\"}" 200
+"{\"id\": \"4f71ba04fd1f5e1a6c000005\"}" 200
 
 "<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
 
 --------------------- >> end captured stdout << ----------------------
-]]></failure></testcase><testcase classname="tests.test_retrieve_package_resource_tests.Retrieve_Package_Resource_Tests" name="test_resource_url_retrieve_success" time="0.008"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;12: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f6ca065fd1f5e1ee8000006\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+]]></failure></testcase><testcase classname="tests.test_retrieve_package_resource_tests.Retrieve_Package_Resource_Tests" name="test_resource_url_retrieve_success" time="0.009"><failure type="exceptions.AssertionError" message="404 != 200&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;12: &#10;False&#10;&#10;&quot;{\&quot;id\&quot;: \&quot;4f71ba04fd1f5e1a6c000006\&quot;}&quot; 200&#10;&#10;&quot;&lt;!doctype html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t\n\t\n\t\t&lt;link rel='stylesheet' href=\&quot;/static/css/style.css\&quot; /&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/lib/knockout-2.0.0.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;http://code.jquery.com/jquery-1.7.1.min.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;script type='text/javascript' src=\&quot;/static/js/client-models.js\&quot;&gt;&lt;/script&gt;\n\t\t&lt;title&gt;Page not found | Learning Content Repository&lt;/title&gt;\n\t\t\n\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\t&lt;nav&gt;\n\t\t\t&lt;a href=\&quot;/\&quot;&gt;Home&lt;/a&gt;\n\t\t\t&lt;a href=/create&gt;Create&lt;/a&gt;\n\t\t&lt;/nav&gt;\n\t\t&lt;div id='content'&gt;\n\t\t\t\n\t&lt;h1&gt;Page not found&lt;/h1&gt;\n \t&lt;p&gt;\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t&lt;/p&gt;\n\n\t\t&lt;/div&gt;\n\t&lt;/body&gt;\n&lt;/html&gt;&quot; 404&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
   File "C:\dev\lcr\tests\test_retrieve_package_resource_tests.py", line 25, in test_resource_url_retrieve_success
@@ -133,12 +139,12 @@ AssertionError: 404 != 200
 12: 
 False
 
-"{\"id\": \"4f6ca065fd1f5e1ee8000006\"}" 200
+"{\"id\": \"4f71ba04fd1f5e1a6c000006\"}" 200
 
 "<!doctype html>\n<html>\n\t<head>\n\t\t\n\t\n\t\t<link rel='stylesheet' href=\"/static/css/style.css\" />\n\t\t<script type='text/javascript' src=\"/static/js/lib/knockout-2.0.0.js\"></script>\n\t\t<script type='text/javascript' src=\"http://code.jquery.com/jquery-1.7.1.min.js\"></script>\n\t\t<script type='text/javascript' src=\"/static/js/client-models.js\"></script>\n\t\t<title>Page not found | Learning Content Repository</title>\n\t\t\n\n\t</head>\n\t<body>\n\t\t<nav>\n\t\t\t<a href=\"/\">Home</a>\n\t\t\t<a href=/create>Create</a>\n\t\t</nav>\n\t\t<div id='content'>\n\t\t\t\n\t<h1>Page not found</h1>\n \t<p>\n \t\tWe're sorry, but the page you were looking for does not exist. Please check the URL and try again.\n \t</p>\n\n\t\t</div>\n\t</body>\n</html>" 404
 
 --------------------- >> end captured stdout << ----------------------
-]]></failure></testcase><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_fail" time="0.004" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_metadata_success" time="0.005" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_success" time="0.005" /><testcase classname="tests.test_update_package_resource_tests.Update_Package_Resource_Tests" name="test_resource_url_update_fail" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;15: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
+]]></failure></testcase><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_id_not_found_fail" time="0.004" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_invalid_id_fail" time="0.003" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_metadata_success" time="0.007" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_no_id_provided_fail" time="0.010" /><testcase classname="tests.test_retrieve_package_tests.Retrieve_Package_Tests" name="test_package_retrieve_success" time="0.006" /><testcase classname="tests.test_update_package_resource_tests.Update_Package_Resource_Tests" name="test_resource_url_update_fail" time="0.002"><error type="exceptions.NotImplementedError" message="TODO&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;15: &#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------"><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
   File "C:\dev\lcr\tests\test_update_package_resource_tests.py", line 12, in test_resource_url_update_fail
@@ -160,24 +166,46 @@ NotImplementedError: TODO
 14: 
 
 --------------------- >> end captured stdout << ----------------------
-]]></error></testcase><testcase classname="tests.test_update_package_tests.Update_Package_Tests" name="test_package_update_fail" time="0.006"><failure type="exceptions.AssertionError" message='200 not greater than or equal to 400&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;7: &#10;False&#10;&#10; post: "{\"id\": \"4f6ca065fd1f5e1ee8000009\"}" 200&#10;&#10; post: "null" 200&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------'><![CDATA[Traceback (most recent call last):
+]]></error></testcase><testcase classname="tests.test_update_package_tests.Update_Package_Tests" name="test_package_update_fail" time="0.004" /><testcase classname="tests.test_update_package_tests.Update_Package_Tests" name="test_package_update_success" time="0.004"><error type="exceptions.ValueError" message='too many values to unpack&#10;-------------------- &gt;&gt; begin captured stdout &lt;&lt; ---------------------&#10;&#10;6: &#10;False&#10;&#10; post: "{\"id\": \"4f71ba04fd1f5e1a6c00000a\"}" 200&#10;&#10;--------------------- &gt;&gt; end captured stdout &lt;&lt; ----------------------'><![CDATA[Traceback (most recent call last):
   File "C:\Python27\Lib\unittest\case.py", line 327, in run
     testMethod()
-  File "C:\dev\lcr\tests\test_update_package_tests.py", line 40, in test_package_update_fail
-    self.assertGreaterEqual(response_update_post.status_code, 400)
-  File "C:\Python27\Lib\unittest\case.py", line 944, in assertGreaterEqual
-    self.fail(self._formatMessage(msg, standardMsg))
-  File "C:\Python27\Lib\unittest\case.py", line 408, in fail
-    raise self.failureException(msg)
-AssertionError: 200 not greater than or equal to 400
+  File "C:\dev\lcr\tests\test_update_package_tests.py", line 20, in test_package_update_success
+    follow_redirects=True)
+  File "C:\dev\virtualenv\lr\lib\site-packages\werkzeug\test.py", line 745, in post
+    return self.open(*args, **kw)
+  File "C:\dev\virtualenv\lr\lib\site-packages\flask\testing.py", line 102, in open
+    follow_redirects=follow_redirects)
+  File "C:\dev\virtualenv\lr\lib\site-packages\werkzeug\test.py", line 675, in open
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+  File "C:\dev\virtualenv\lr\lib\site-packages\werkzeug\test.py", line 818, in run_wsgi_app
+    app_iter = app(environ, start_response)
+  File "C:\dev\virtualenv\lr\lib\site-packages\flask\app.py", line 1518, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "C:\dev\virtualenv\lr\lib\site-packages\flask\app.py", line 1506, in wsgi_app
+    response = self.make_response(self.handle_exception(e))
+  File "C:\dev\virtualenv\lr\lib\site-packages\flask\app.py", line 1504, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\dev\virtualenv\lr\lib\site-packages\flask\app.py", line 1264, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\dev\virtualenv\lr\lib\site-packages\flask\app.py", line 1262, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\dev\virtualenv\lr\lib\site-packages\flask\app.py", line 1248, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\dev\lcr\repo\api.py", line 19, in UpdatePackage
+    return packagecontroller.update(request, id)
+  File "C:\dev\lcr\repo\packagecontroller.py", line 107, in update
+    crud_helpers.update_package(id, request.json)
+  File "C:\dev\lcr\repo\crud_helpers.py", line 131, in update_package
+    save_package(metadata, id)
+  File "C:\dev\lcr\repo\crud_helpers.py", line 40, in save_package
+    for k,v in metadata:
+ValueError: too many values to unpack
 -------------------- >> begin captured stdout << ---------------------
 
-7: 
+6: 
 False
 
- post: "{\"id\": \"4f6ca065fd1f5e1ee8000009\"}" 200
-
- post: "null" 200
+ post: "{\"id\": \"4f71ba04fd1f5e1a6c00000a\"}" 200
 
 --------------------- >> end captured stdout << ----------------------
-]]></failure></testcase><testcase classname="tests.test_update_package_tests.Update_Package_Tests" name="test_package_update_success" time="0.005" /></testsuite>
+]]></error></testcase></testsuite>
