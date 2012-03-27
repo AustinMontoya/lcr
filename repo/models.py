@@ -10,26 +10,19 @@ from bson.objectid import ObjectId
 # Resources
 ##
 
-class Resource(EmbeddedDocument):
-	'''A general resource representing an piece of content that is
-	valuable for learning the topic of the containing content package'''
-
-	name = StringField(min_length=1, max_length=50, required=True)
-	last_updated = DateTimeField(required=True)
-
-class WebResource(Resource):
+class WebResource(EmbeddedDocument):
 	_public_fields = ['name', 'last_updated', 'url']
 	name = StringField(min_length=1, max_length=50, required=True)
 	last_updated = DateTimeField(required=True)
 	url = URLField(required=True)
 
-class FileResource(Resource):
-	_private_fields = ['fileId']
-	_public_fields = ['name', 'last_updated', 'mimeType']
+class FileResource(EmbeddedDocument):
+	_private_fields = ['file_id']
+	_public_fields = ['name', 'last_updated', 'mime_type']
 	name = StringField(min_length=1, max_length=50, required=True)
 	last_updated = DateTimeField(required=True)
-	fileId = ObjectIdField(required=True)
-	mimeType = StringField(max_length=50)
+	file_id = ObjectIdField(required=True)
+	mime_type = StringField(max_length=50)
 
 ##
 # Containers
