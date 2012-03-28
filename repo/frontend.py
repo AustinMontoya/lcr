@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
-from crud_helpers import retrieve_package, HelperException
+from crud_helpers import retrieve_json_package, HelperException
 
 frontend = Blueprint('frontend', __name__, 
 					 template_folder='templates', static_folder='static')
@@ -18,7 +18,7 @@ def create(id):
 def view(id):
 	try:
 		return render_template("view.html", 
-			packageData=retrieve_package(id))
+			packageData=retrieve_json_package(id))
 	except HelperException as e:
 		abort(404)
 

@@ -88,21 +88,7 @@ def create_url_resource(package_id, metadata, resource_name):
         raise HelperException("The resource could not be added to the package." + str(e), 500)
 
 def retrieve_json_package(id):
-    pkg = json.loads(Package.make_json_publicsafe(retrieve_package(id)))
-
-    for item in pkg['files']:
-        item['type'] = 'file'
-
-    for item in pkg['urls']:
-        item['type'] = 'url'
-
-    if pkg['files'] is None:
-        pkg['files'] = []
-
-    pkg['resources'] = pkg['files'] + pkg['urls']
-    del pkg['files']
-    del pkg['urls']
-
+    pkg = retrieve_package(id).to_python_public()
     return json.dumps(pkg)
 
 def retrieve_package(id):
@@ -156,3 +142,4 @@ def _save_from_model(model):
         package_dict['_id'] = ObjectId(id)
 
     return mongo.db.packages.save(package_dict)
+    

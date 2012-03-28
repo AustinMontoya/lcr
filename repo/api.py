@@ -1,6 +1,5 @@
 from flask import Blueprint, current_app, request, make_response, url_for, render_template
-import resourcecontroller
-import packagecontroller
+import resourcecontroller, packagecontroller, searchcontroller
 api = Blueprint('api', __name__, url_prefix='/api')
 # Content CRUD routes ---------------------------------
 # Create (supports optional inline and multi parameters)
@@ -36,10 +35,17 @@ def RetrieveResource(id, resource_name):
 
 # Update (supports metadata parameter)
 @api.route('/update/package/<id>/resource/<resource_name>', methods=['POST'])
-def UpdateResource(id):
+def UpdateResource(id, resource_name):
 	return resourcecontroller.update(request, id, resource_name) 
 
 # Delete
 @api.route('/delete/package/<id>/resource/<resource_name>', methods=['POST'])
-def DeleteResource(id):
+def DeleteResource(id, resource_name):
 	return resourcecontroller.content(request, id, resource_name)
+
+# Browsing CRUD routes ---------------------------------
+
+# Lists all the items of a particular tag
+@api.route('/tags/<tag>', methods=['GET'])
+def GetDocumentsByTag(tag):
+	return searchcontroller.get_by_tags([tag])

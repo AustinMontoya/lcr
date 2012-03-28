@@ -45,11 +45,8 @@ function LearningPackage(id) {
 		self.tags(data.tags.join(','));
 
 		if(data.resources) {
-			for (var id in data.resources) {
-				$.get('/api/resource/'+id+"?metadata=true", function(resourceMetadata) {
-					self.resources.push(new Resource(item));
-				});
-			}
+			for (var i=0; i < data.resources.length; i++) 
+				self.resources.push(new Resource(data.resources[i]));
 		}
 	}
 
@@ -84,6 +81,13 @@ function Resource(data) {
 			html += "<li>"+self.errors()[i]+"</li>";
 		return html+"</ul>";
 	});
+
+	self.metadata = ko.computed(function(){
+		return {
+			name : self.name(),
+			type : self.type()
+		}
+	})
 
 	self.locator = ko.computed(function() {
 		return "http://"+location.host+"/api/resource/"+self.id();

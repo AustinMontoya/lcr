@@ -15,10 +15,10 @@
  	</ul>
  	<h3>Resources:</h3>
  	<table>
- 		<tbody>
- 			<tr data-bind="foreach: resources">
+ 		<tbody data-bind="foreach: resources">
+ 			<tr>
  				<td data-bind="text: name" />
- 				<td><a data-bind="attributes : { href : locator }">link</a></td>
+ 				<td><a data-bind="attr : { href : locator }">link</a></td>
  			</tr>
  		</tbody>
  	</table>
